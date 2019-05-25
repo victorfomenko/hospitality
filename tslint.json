@@ -1,0 +1,23 @@
+{
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rulesDirectory": ["tslint-microsoft-contrib", "tslint-plugin-prettier"],
+  "rules": {
+    "prettier": true,
+    "object-literal-sort-keys": false,
+    "no-unused-variable": [
+      true,
+      {
+        "ignore-pattern": "^_"
+      }
+    ]
+  },
+  "jsRules": {},
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**/*.ts",
+      "test/**/*.js",
+      "src/**/*.js",
+      "**/*.js"
+    ]
+  }
+}

@@ -13,7 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "strictFunctionTypes": false
   },
   "include": ["src"],
   "exclude": ["node_modules", "build", "src/**/*.js", "src/**/*.jsx"]
