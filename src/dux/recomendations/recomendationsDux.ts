@@ -5,11 +5,13 @@ import { IAppState } from '../duxRoot';
 // Interface
 export interface IRecomendationsState {
   isLoading: boolean;
+  placeCollectionId: number | null;
 }
 
 // Default state
 const defaultState: IRecomendationsState = {
   isLoading: false,
+  placeCollectionId: null,
 };
 
 // Selectors
