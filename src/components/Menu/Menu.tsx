@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { CSSProperties, SFC } from 'react';
+import React, { CSSProperties, FC } from 'react';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 import { ReactComponent as InfoIcon } from './img/info.svg';
 import { ReactComponent as ListIcon } from './img/list.svg';
@@ -13,7 +13,7 @@ const svgGradientStyle: CSSProperties = {
   position: 'absolute',
 };
 
-const Menu: SFC<{}> = () => (
+const Menu: FC<{}> = () => (
   <Nav>
     <svg aria-hidden="true" focusable="false" style={svgGradientStyle}>
       <linearGradient id="icon-gradient" x2="1" y2="1">
