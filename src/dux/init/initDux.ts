@@ -20,25 +20,31 @@ export const afterInitStore = () => (dispatch: DispatchAsync) => {
     id = storage.getItem(PLACE_COLLECTION_KEY);
   }
 
-  dispatch(setPlaceCollectionId(id ? Number(id) : id));
+  dispatch(setCollectionId(id));
 };
 
 // Interface
 export interface IInitState {
   placeCollectionId: number | null;
+  isLoading: boolean;
 }
 
 // Default state
 const defaultState: IInitState = {
   placeCollectionId: null,
+  isLoading: false,
 };
 
 // Selectors
 const duxSelector = (state: IAppState) => state.init;
 
 // Sync actions
-export const setPlaceCollectionId = createAction<number>(
-  'setPlaceCollectionId',
+export const loading = createAction('loading');
+export const setCollectionId = createAction<string>('setCollectionId');
+
+export const loadingSelector = createSelector(
+  duxSelector,
+  ({ isLoading }) => isLoading,
 );
 
 export const placeCollectionIdSelector = createSelector(
@@ -49,7 +55,7 @@ export const placeCollectionIdSelector = createSelector(
 // Reducer
 export const initReducer = createReducer(
   {
-    [setPlaceCollectionId.toString()]: (state: IInitState, payload) => ({
+    [setCollectionId.toString()]: (state: IInitState, payload) => ({
       ...state,
       placeCollectionId: payload,
     }),

@@ -18,9 +18,9 @@ interface IRootRouterProps {
   collectionId: number;
 }
 
-const RootRouter = (props: IRootRouterProps) => (
-  <Router history={history}>
-    {props.collectionId ? (
+const RootRouter = (props: IRootRouterProps) =>
+  props.collectionId ? (
+    <Router history={history}>
       <Layout>
         <Switch>
           <Redirect from="/" exact={true} to="/welcome" />
@@ -32,11 +32,13 @@ const RootRouter = (props: IRootRouterProps) => (
           <Route component={NotFoundPage} />
         </Switch>
       </Layout>
-    ) : (
-      'Please input collection id in query string. For example: ?placeCollectionId=2'
-    )}
-  </Router>
-);
+    </Router>
+  ) : (
+    <div>
+      Please input collection id in query string. For example:
+      ?placeCollectionId=2
+    </div>
+  );
 
 const mapStateToProps = (state: IAppState) => ({
   collectionId: initDux.placeCollectionIdSelector(state),
