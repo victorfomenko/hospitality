@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "eslint-config-prettier": "^4.3.0",
+    "http-proxy-middleware": "^0.19.1",
     "husky": "^2.3.0",
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
