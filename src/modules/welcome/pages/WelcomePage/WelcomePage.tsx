@@ -14,11 +14,15 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => (
 );
 
 const Wrapper = styled.div`
-  padding: 30px;
+  width: 100%;
+  overflow: hidden;
 `;
+
 const Title = styled.h1`
+  padding: 30px 30px 0 30px;
   color: #31e0e0;
   font-size: 22px;
+  margin: 0;
 `;
 
 export default WelcomePage;
