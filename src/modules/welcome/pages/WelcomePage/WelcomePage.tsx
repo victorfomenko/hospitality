@@ -52,7 +52,9 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
         {gallery.items.map(item => {
           return <img key={item.image} src={item.image} alt={item.name} />;
         })}
-        <Link to="/chatbot">Go next</Link>
+        <LastSection>
+          <Button to="/chatbot">Start now</Button>
+        </LastSection>
       </SwipeableViews>
     </Wrapper>
   );
@@ -104,6 +106,26 @@ const NavItem = styled.div<INavItem>`
   cursor: pointer;
   ${({ isActive }) => isActive && 'background-color: #30b9fb;'}
   transition: background-color 300ms;
+`;
+
+const LastSection = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-align: center;
+  justify-content: center;
+`;
+
+const Button = styled(Link)`
+  isplay: inline-block;
+  background-color: #6093f8;
+  padding: 15px 30px;
+  color: white !important;
+  border-radius: 30px;
+  position: absolute;
+  bottom: 10%;
+  font-size: 24px;
 `;
 
 export default WelcomePage;
