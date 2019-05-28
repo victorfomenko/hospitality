@@ -82,6 +82,16 @@ export const loadingSelector = createSelector(
   ({ isLoading }) => isLoading,
 );
 
+export const gallerySelector = createSelector(
+  duxSelector,
+  ({ gallery }) => gallery,
+);
+
+export const collectionSelector = createSelector(
+  duxSelector,
+  ({ collection }) => collection,
+);
+
 export const placeCollectionIdSelector = createSelector(
   duxSelector,
   ({ placeCollectionId }) => placeCollectionId,
