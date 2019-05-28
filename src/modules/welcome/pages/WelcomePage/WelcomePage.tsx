@@ -47,6 +47,7 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
         style={swipableViewStyle}
         containerStyle={swipableContainerStyle}
         slideStyle={swipableSlideStyle}
+        enableMouseEvents={true}
       >
         {gallery.items.map(item => {
           return <img key={item.image} src={item.image} alt={item.name} />;
@@ -69,6 +70,7 @@ const swipableSlideStyle = {
   height: '100%',
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
 };
 
 const Wrapper = styled.div`
