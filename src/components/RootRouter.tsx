@@ -15,7 +15,7 @@ import Layout from './Layout';
 export const history = createBrowserHistory();
 
 interface IRootRouterProps {
-  collectionId: string;
+  collectionId: string | null | false;
   apiInit: () => void;
 }
 
@@ -25,25 +25,30 @@ const RootRouter = (props: IRootRouterProps) => {
     apiInit();
   }, [apiInit]);
 
-  return collectionId ? (
-    <Router history={history}>
-      <Layout>
-        <Switch>
-          <Redirect from="/" exact={true} to="/welcome" />
-          <Route path="/welcome" component={WelcomePage} />
-          <Route path="/video" component={VideoPage} />
-          <Route path="/chatbot" component={ChatbotPage} />
-          <Route path="/mood" component={MoodPage} />
-          <Route path="/places" component={PlacesPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </Layout>
-    </Router>
-  ) : (
-    <div>
-      Please input collection id in query string. For example:
-      ?placeCollectionId=2
-    </div>
+  return (
+    <>
+      {collectionId && (
+        <Router history={history}>
+          <Layout>
+            <Switch>
+              <Redirect from="/" exact={true} to="/welcome" />
+              <Route path="/welcome" component={WelcomePage} />
+              <Route path="/video" component={VideoPage} />
+              <Route path="/chatbot" component={ChatbotPage} />
+              <Route path="/mood" component={MoodPage} />
+              <Route path="/places" component={PlacesPage} />
+              <Route component={NotFoundPage} />
+            </Switch>
+          </Layout>
+        </Router>
+      )}
+      {collectionId === false && (
+        <div>
+          Please input collection id in query string. For example:
+          ?placeCollectionId=2
+        </div>
+      )}
+    </>
   );
 };
 

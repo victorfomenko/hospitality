@@ -11,7 +11,7 @@ import {
   IPlaceCollection,
 } from './initApi';
 
-const getCollectinId = () => {
+const getCollectionId = () => {
   const { search } = window.location;
   const { placeCollectionId, ...queryParams } = qs.parse(search, {
     ignoreQueryPrefix: true,
@@ -25,12 +25,12 @@ const getCollectinId = () => {
   } else {
     id = storage.getItem(PLACE_COLLECTION_KEY);
   }
-  return id;
+  return id ? id : false;
 };
 
 // Interface
 export interface IInitState {
-  placeCollectionId: string | null;
+  placeCollectionId: string | null | false;
   error: {} | null;
   isLoading: boolean;
   collection: null | IPlaceCollection;
@@ -62,11 +62,14 @@ export const setCollectionId = createAction<string>('setCollectionId');
 
 // Async actions
 export const apiInit = () => async (dispatch: DispatchAsync) => {
-  dispatch(loading());
-  const collectionId = getCollectinId();
+  const collectionId = getCollectionId();
   dispatch(setCollectionId(collectionId));
+  if (!collectionId) {
+    return;
+  }
+  dispatch(loading());
   try {
-    const { placeCollection } = await getPlaceCollectionById(collectionId);
+    const { placeCollection } = await getPlaceCollectionById(collectionId!);
     const gallery = await getGalleryById('5b03c01c951f0c114344f74e');
     dispatch(success({ collection: placeCollection, gallery }));
   } catch (e) {
