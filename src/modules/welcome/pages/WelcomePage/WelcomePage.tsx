@@ -118,14 +118,19 @@ const LastSection = styled.div`
 `;
 
 const Button = styled(Link)`
-  isplay: inline-block;
-  background-color: #6093f8;
-  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 500;
+  background: linear-gradient(to right, #15b0e9, #99d8bc);
+  height: 48px;
+  padding: 0px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white !important;
-  border-radius: 30px;
+  border-radius: 24px;
   position: absolute;
   bottom: 10%;
-  font-size: 24px;
 `;
 
 export default WelcomePage;
