@@ -5,5 +5,5 @@
     { "language": "typescript", "autoFix": true },
     { "language": "typescriptreact", "autoFix": true }
   ],
-  "jira-plugin.workingProject": "SOF"
+  "jira-plugin.workingProject": ""
 }
