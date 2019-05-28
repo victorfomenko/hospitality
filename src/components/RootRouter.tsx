@@ -1,5 +1,5 @@
 import { createBrowserHistory } from 'history';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { IAppState } from '../dux/duxRoot';
@@ -15,11 +15,17 @@ import Layout from './Layout';
 export const history = createBrowserHistory();
 
 interface IRootRouterProps {
-  collectionId: number;
+  collectionId: string;
+  apiInit: () => void;
 }
 
-const RootRouter = (props: IRootRouterProps) =>
-  props.collectionId ? (
+const RootRouter = (props: IRootRouterProps) => {
+  const { collectionId, apiInit } = props;
+  useEffect(() => {
+    apiInit();
+  }, [apiInit]);
+
+  return collectionId ? (
     <Router history={history}>
       <Layout>
         <Switch>
@@ -39,9 +45,16 @@ const RootRouter = (props: IRootRouterProps) =>
       ?placeCollectionId=2
     </div>
   );
+};
 
+const mapDispatchToProps = {
+  apiInit: initDux.apiInit,
+};
 const mapStateToProps = (state: IAppState) => ({
   collectionId: initDux.placeCollectionIdSelector(state),
 });
 
-export default connect(mapStateToProps)(RootRouter);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RootRouter);

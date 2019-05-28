@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import gallery from '../../data/providers/gallery';
 import placeCollection from '../../data/providers/placecollection';
 
-interface IPlaceCollection {
+export interface IPlaceCollection {
   id: string;
   address: string;
   name: string;
@@ -27,14 +27,48 @@ interface IPlaceCollectionRes {
   success: boolean;
 }
 
-export const getGalleryById = async (id: string) => {
-  const res = await gallery.get({ id });
-  const resJSON = await res.data.json();
-  return resJSON;
+export interface IGalleryRes {
+  id: string;
+  name: string;
+  archived: boolean;
+  description: string;
+  items: IGalleryItem[];
+  owner: {
+    id: string;
+    name: string;
+  };
+}
+
+interface IGalleryItem {
+  id: string;
+  createdAt: Date;
+  ctaLabel: string;
+  ctaUrl: string;
+  description: string;
+  image: string;
+  name: string;
+  order: number;
+  price: string;
+  thumbnails: {
+    [key: string]: string;
+  };
+  updatedAt: Date;
+}
+
+export const getGalleryById = async (id: string): Promise<IGalleryRes> => {
+  const { data, statusText }: AxiosResponse = await gallery.get(id);
+  if (statusText !== 'OK') {
+    throw new Error(statusText);
+  }
+  return data;
 };
 
-export const getPlaceCollectionById = async (id: string) => {
-  const res: AxiosResponse = await placeCollection.get({ id });
-  const resJSON: IPlaceCollectionRes = await res.data.json();
-  return resJSON;
+export const getPlaceCollectionById = async (
+  id: string,
+): Promise<IPlaceCollectionRes> => {
+  const { data, statusText }: AxiosResponse = await placeCollection.get(id);
+  if (statusText !== 'OK') {
+    throw new Error(statusText);
+  }
+  return data;
 };

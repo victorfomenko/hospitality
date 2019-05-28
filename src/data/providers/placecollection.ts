@@ -1,10 +1,6 @@
-import axios, { AxiosPromise } from 'axios';
+import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 
-interface IQuery {
-  id: string;
-}
-
-const get = (params: IQuery): AxiosPromise =>
-  axios.get('/api/placecollection', { params });
+const get = (id: string = '', params?: AxiosRequestConfig): AxiosPromise =>
+  axios.get(`/api/placecollection/${id}`, params);
 
 export default { get };
