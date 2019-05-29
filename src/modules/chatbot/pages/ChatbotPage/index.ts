@@ -1,1 +1,1 @@
-export { default } from './ChatbotPage';
+export { default } from './ChatbotPage.connect';
