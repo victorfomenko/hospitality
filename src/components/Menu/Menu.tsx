@@ -27,7 +27,7 @@ const Menu: FC<{}> = () => (
     <NavItem to="/chatbot">
       <ProfileIcon />
     </NavItem>
-    <NavItem to="/mood">
+    <NavItem to="/categories">
       <MoodIcon />
     </NavItem>
     <NavItem to="/recomendations">

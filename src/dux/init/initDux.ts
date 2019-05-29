@@ -92,6 +92,11 @@ export const collectionSelector = createSelector(
   ({ collection }) => collection,
 );
 
+export const categoriesSelector = createSelector(
+  collectionSelector,
+  collection => (collection ? collection.places.map(item => item.type) : null),
+);
+
 export const placeCollectionIdSelector = createSelector(
   duxSelector,
   ({ placeCollectionId }) => placeCollectionId,
