@@ -37,7 +37,6 @@ export const loadingSelector = createSelector(
 // Sync actions
 export const loading = createAction('loading');
 export const success = createAction('success');
-export const change = createAction<IChatbotMessage>('change');
 
 // Reducer
 export const chatbotReducer = createReducer(
@@ -49,10 +48,6 @@ export const chatbotReducer = createReducer(
     [success.toString()]: (state: IChatbotState) => ({
       ...state,
       isLoading: false,
-    }),
-    [change.toString()]: (state: IChatbotState, payload) => ({
-      ...state,
-      data: payload,
     }),
   },
   defaultState,

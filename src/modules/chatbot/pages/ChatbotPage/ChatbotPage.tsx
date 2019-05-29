@@ -10,21 +10,24 @@ interface IChatbotProps {
   isLoading: boolean;
   startLoading: () => void;
   finishLoading: () => void;
-  saveChatbotState: (data: object) => void;
 }
 const CHATBOT_URL = `http://demo-ui.sofiapulse.com/flow/5cc0971e3b38664237b6a077?postMessageUrl=${
   window.location.origin
 }`;
 
 const ChatbotPage = ({
-  saveChatbotState,
   startLoading,
   finishLoading,
   isLoading,
 }: IChatbotProps) => {
-  const [url] = React.useState(
-    storage.getItem(CHATBOT_KEY) || `${CHATBOT_URL}`,
-  );
+  const [url] = React.useState(() => {
+    const chatbotData = storage.getItem(CHATBOT_KEY);
+    if (!chatbotData) {
+      return CHATBOT_URL;
+    }
+    const data = JSON.parse(chatbotData);
+    return `${CHATBOT_URL}&start=${data.id}`;
+  });
 
   React.useEffect(() => {
     startLoading();
@@ -41,7 +44,7 @@ const ChatbotPage = ({
     if (data && typeof data === 'string') {
       const { type, data: parsedData }: IChatbotMessage = JSON.parse(data);
       if (type === 'chatbotChange') {
-        storage.setItem(CHATBOT_KEY, `${CHATBOT_URL}&start=${parsedData.id}`);
+        storage.setItem(CHATBOT_KEY, JSON.stringify(parsedData));
       }
     }
   };
