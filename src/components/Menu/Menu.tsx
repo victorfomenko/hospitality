@@ -30,7 +30,7 @@ const Menu: FC<{}> = () => (
     <NavItem to="/categories">
       <MoodIcon />
     </NavItem>
-    <NavItem to="/recomendations">
+    <NavItem to="/places">
       <ListIcon />
     </NavItem>
     <NavItem to="/saved">
