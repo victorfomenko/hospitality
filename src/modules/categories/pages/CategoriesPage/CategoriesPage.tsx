@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import storage from 'local-storage-fallback';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import Badge from '../../../../components/Badge/Badge';
 import { CATEGORIES_KEY } from '../../../../data/constants';
+import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import withWidth from '../../../../utils/withWidth';
 
 interface ICategoriesProps {
@@ -14,15 +14,7 @@ interface ICategoriesProps {
 }
 
 const CategoriesPage = ({ width, categories }: ICategoriesProps) => {
-  const initialCategories = storage.getItem(CATEGORIES_KEY);
-  const [state, setState] = React.useState<Array<string | undefined>>(
-    initialCategories ? JSON.parse(initialCategories) : [],
-  );
-
-  React.useEffect(() => {
-    storage.setItem(CATEGORIES_KEY, JSON.stringify(state));
-  }, [state]);
-
+  const [state, setState] = useStateWithLocalStorage(CATEGORIES_KEY, []);
   const categoryStyle = {
     width: `${width / 4}px`,
     height: `${width / 4}px`,

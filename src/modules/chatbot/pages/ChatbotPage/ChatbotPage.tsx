@@ -22,10 +22,11 @@ const ChatbotPage = ({
 }: IChatbotProps) => {
   const [url] = React.useState(() => {
     const chatbotData = storage.getItem(CHATBOT_KEY);
-    if (!chatbotData) {
+    const data = chatbotData ? JSON.parse(chatbotData) : null;
+
+    if (!data) {
       return CHATBOT_URL;
     }
-    const data = JSON.parse(chatbotData);
     return `${CHATBOT_URL}&start=${data.id}`;
   });
 
