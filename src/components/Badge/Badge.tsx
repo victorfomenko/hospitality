@@ -39,13 +39,13 @@ const StyledBadge = styled.div<ICategory>`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   color: #1f437f;
   font-size: 18px;
   box-shadow: 5px 5px 15px rgb(133, 145, 176, 0.5);
   ${({ isActive }) =>
     isActive && `background-color: #1F437F; box-shadow: none; color: white;`}
   position: relative;
+  transition background-color 0.2s
 `;
 
 const StyledCheckIcon = styled(CheckIcon)`

@@ -130,6 +130,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+
 const Button = styled(Link)`
   font-size: 18px;
   font-weight: 500;
