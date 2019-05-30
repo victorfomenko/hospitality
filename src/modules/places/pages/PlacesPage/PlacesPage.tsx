@@ -1,9 +1,10 @@
-import React from 'react';
+import styled from '@emotion/styled';
+import React, { FunctionComponent } from 'react';
 
-class PlacesPage extends React.PureComponent {
-  public render() {
-    return <div>PlacesPage</div>;
-  }
-}
+const PlacesPage: FunctionComponent = () => <Places>PlacesPage</Places>;
+
+const Places = styled.div`
+  height: 100%;
+`;
 
 export default PlacesPage;

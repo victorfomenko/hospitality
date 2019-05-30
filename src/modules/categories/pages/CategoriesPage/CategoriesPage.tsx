@@ -66,7 +66,7 @@ const CategoriesPage = ({ width, categories }: ICategoriesProps) => {
       </CategoriesWrapper>
       {state.length > 0 && (
         <ButtonWrapper>
-          <Button to="/recomendations">Recomendations</Button>
+          <Button to="/places">Recomendations</Button>
         </ButtonWrapper>
       )}
     </Wrapper>
