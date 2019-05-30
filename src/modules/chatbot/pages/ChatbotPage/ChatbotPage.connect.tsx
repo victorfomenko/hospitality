@@ -10,7 +10,6 @@ const mapStateToProps = (state: IAppState) => ({
 const mapDispatch = {
   startLoading: chatbotDux.loading,
   finishLoading: chatbotDux.success,
-  saveChatbotState: chatbotDux.change,
 };
 
 export default connect(
