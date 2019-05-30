@@ -1,1 +1,1 @@
-export { default } from './PlacesPage';
+export { default } from './PlacesPage.connect';

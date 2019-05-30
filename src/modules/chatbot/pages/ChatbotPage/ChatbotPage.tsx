@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import storage from 'local-storage-fallback';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import Iframe from 'react-iframe';
 import CircularProgress from '../../../../components/CircularProgress/CurcularProgress';
 import { CHATBOT_KEY } from '../../../../data/constants';
@@ -15,11 +15,11 @@ const CHATBOT_URL = `http://demo-ui.sofiapulse.com/flow/5cc0971e3b38664237b6a077
   window.location.origin
 }`;
 
-const ChatbotPage = ({
+const ChatbotPage: FunctionComponent<IChatbotProps> = ({
   startLoading,
   finishLoading,
   isLoading,
-}: IChatbotProps) => {
+}) => {
   const [url] = React.useState(() => {
     const chatbotData = storage.getItem(CHATBOT_KEY);
     const data = chatbotData ? JSON.parse(chatbotData) : null;

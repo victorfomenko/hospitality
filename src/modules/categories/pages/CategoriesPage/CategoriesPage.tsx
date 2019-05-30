@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import Badge from '../../../../components/Badge/Badge';
 import { CATEGORIES_KEY } from '../../../../data/constants';
@@ -13,7 +13,10 @@ interface ICategoriesProps {
   children?: ReactNode;
 }
 
-const CategoriesPage = ({ width, categories }: ICategoriesProps) => {
+const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
+  width,
+  categories,
+}) => {
   const [state, setState] = useStateWithLocalStorage(CATEGORIES_KEY, []);
   const categoryStyle = {
     width: `${width / 4}px`,
