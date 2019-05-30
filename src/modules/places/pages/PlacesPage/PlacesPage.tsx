@@ -13,7 +13,9 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   const [categories] = useStateWithLocalStorage(CATEGORIES_KEY, []);
   const [chatbot] = useStateWithLocalStorage(CHATBOT_KEY, {});
   const isEmpty = !categories.length && !Object.keys(chatbot).length;
-
+  const places = collection.places.filter(item =>
+    categories.includes(item.type),
+  );
   return isEmpty ? (
     <Empty>
       <div>
@@ -25,6 +27,9 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   ) : (
     <Places>
       <Title>Recomendation</Title>
+      {places.map(place => (
+        <div key={place.id}>{place.name}</div>
+      ))}
     </Places>
   );
 };
