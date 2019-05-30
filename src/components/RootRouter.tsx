@@ -8,7 +8,7 @@ import CategoriesPage from '../modules/categories';
 import ChatbotPage from '../modules/chatbot';
 import NotFoundPage from '../modules/notFound';
 import PlacesPage from '../modules/places';
-import VideoPage from '../modules/video';
+import RecomendationsPage from '../modules/recomendations';
 import WelcomePage from '../modules/welcome';
 import Layout from './Layout';
 
@@ -33,7 +33,7 @@ const RootRouter = (props: IRootRouterProps) => {
             <Switch>
               <Redirect from="/" exact={true} to="/welcome" />
               <Route path="/welcome" component={WelcomePage} />
-              <Route path="/video" component={VideoPage} />
+              <Route path="/recomendations" component={RecomendationsPage} />
               <Route path="/chatbot" component={ChatbotPage} />
               <Route path="/categories" component={CategoriesPage} />
               <Route path="/places" component={PlacesPage} />
