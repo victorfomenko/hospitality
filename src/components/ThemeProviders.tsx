@@ -12,7 +12,7 @@ const globalStyles = css`
   #root {
     min-height: 100%;
     height: 100%;
-    font-family: Roboto, sans-serif;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
   }
 
   body {
