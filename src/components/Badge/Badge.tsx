@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import { ReactComponent as CheckIcon } from './img/check.svg';
 
-interface IBadge {
-  children?: ReactNode;
+interface IBadge
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
   isActive?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  style?: object;
 }
 
 interface ICategory {
@@ -17,7 +18,7 @@ const Badge: FunctionComponent<IBadge> = ({
   children,
   onClick,
   isActive,
-  ...other
+  ...props
 }: IBadge): JSX.Element => {
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (onClick) {
@@ -25,7 +26,7 @@ const Badge: FunctionComponent<IBadge> = ({
     }
   };
   return (
-    <StyledBadge onClick={handleClick} isActive={isActive} {...other}>
+    <StyledBadge onClick={handleClick} isActive={isActive} {...props}>
       {isActive && <StyledCheckIcon />}
       {children}
     </StyledBadge>
