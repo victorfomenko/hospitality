@@ -29,6 +29,10 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
       <PlacePhoto bgImg={imgUrl} />
       <Content>
         <PlaceName>{place.name}</PlaceName>
+        <FlexRow>
+          <Rate>{place.details.rating}</Rate>
+          <Reviews>{place.details.reviews.length} Google reviews</Reviews>
+        </FlexRow>
       </Content>
     </Place>
   );
@@ -61,6 +65,20 @@ const Content = styled.div`
 const PlaceName = styled.div`
   font-size: 24px;
   color: #444;
+`;
+
+const FlexRow = styled.div`
+  display: flex;
+`;
+
+const Rate = styled.div`
+  color: #ffc850;
+  font-size: 18px;
+`;
+
+const Reviews = styled.div`
+  color: #8591b0;
+  margin-left: 20px;
 `;
 
 export default PlacesByIdPage;
