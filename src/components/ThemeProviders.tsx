@@ -17,7 +17,7 @@ const globalStyles = css`
 
   body {
     margin: 0;
-    color: #2f3847;
+    color: #222;
     font-weight: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -38,7 +38,7 @@ const globalStyles = css`
   a:hover,
   a:active {
     text-decoration: none;
-    color: #2f3847;
+    color: #222;
   }
 
   table {

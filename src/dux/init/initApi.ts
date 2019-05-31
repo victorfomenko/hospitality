@@ -13,12 +13,42 @@ export interface IPlaceCollection {
   places: IPlace[];
 }
 
-interface IPlace {
+export interface IPlace {
   id: string;
   name: string;
   type: string;
   hidden: boolean;
   googlePlaceId: string;
+  details: {
+    id: string;
+    name: string;
+    icon: string;
+    rating: number;
+    price_level: number;
+    url: string;
+    user_ratings_total: number;
+    formatted_address: string;
+    photos: IPlacePhoto[];
+    reviews: IPlaceReview[];
+  };
+}
+
+export interface IPlacePhoto {
+  photo_reference: string;
+  height: number;
+  width: number;
+  html_attributions: string;
+}
+
+interface IPlaceReview {
+  author_name: string;
+  author_url: string;
+  language: string;
+  profile_photo_url: string;
+  rating: number;
+  relative_time_description: string;
+  text: string;
+  time: number;
 }
 
 interface IPlaceCollectionRes {

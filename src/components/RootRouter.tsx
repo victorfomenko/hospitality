@@ -7,7 +7,7 @@ import * as initDux from '../dux/init/initDux';
 import CategoriesPage from '../modules/categories';
 import ChatbotPage from '../modules/chatbot';
 import NotFoundPage from '../modules/notFound';
-import PlacesPage from '../modules/places';
+import { PlacesByIdPage, PlacesPage } from '../modules/places';
 import WelcomePage from '../modules/welcome';
 import Layout from './Layout';
 
@@ -34,7 +34,8 @@ const RootRouter = (props: IRootRouterProps) => {
               <Route path="/welcome" component={WelcomePage} />
               <Route path="/chatbot" component={ChatbotPage} />
               <Route path="/categories" component={CategoriesPage} />
-              <Route path="/places" component={PlacesPage} />
+              <Route path="/places" exact={true} component={PlacesPage} />
+              <Route path="/places/:id" component={PlacesByIdPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </Layout>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CATEGORIES_KEY, CHATBOT_KEY } from '../../../../data/constants';
 import { IPlaceCollection } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
+import PlaceCard from '../../components/PlaceCard';
 
 interface IPlacePageProps {
   collection: IPlaceCollection;
@@ -16,6 +17,7 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   const places = collection.places.filter(item =>
     categories.includes(item.type),
   );
+
   return isEmpty ? (
     <Empty>
       <div>
@@ -25,12 +27,12 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
       </div>
     </Empty>
   ) : (
-    <Places>
+    <Wrapper>
       <Title>Recomendation</Title>
       {places.map(place => (
-        <div key={place.id}>{place.name}</div>
+        <PlaceCard key={place.id} place={place} />
       ))}
-    </Places>
+    </Wrapper>
   );
 };
 
@@ -45,10 +47,11 @@ const Empty = styled.div`
   }
 `;
 
-const Places = styled.div`
+const Wrapper = styled.div`
   padding: 35px 20px 0px 20px;
   height: 100%;
   overflow: auto;
+  background-color: #eeeeee;
 `;
 
 const Title = styled.h1`
