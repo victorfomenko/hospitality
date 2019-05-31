@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { NO_PHOTO_URL } from '../../../data/constants';
+import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../../data/constants';
 import { IPlace, IPlacePhoto } from '../../../dux/init/initApi';
 import { ReactComponent as CommentIcon } from './img/comment.svg';
 import { ReactComponent as LocationIcon } from './img/location.svg';
@@ -27,9 +27,7 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
     if (!photoList.length) {
       return NO_PHOTO_URL;
     }
-    const [firstPhoto] = photoList;
-
-    return `/api/googleplace/photo/${firstPhoto.photo_reference}`;
+    return `${GOOGLE_PHOTO_API}/${photoList[0].photo_reference}`;
   };
 
   return (
