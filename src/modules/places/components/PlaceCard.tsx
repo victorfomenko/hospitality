@@ -5,6 +5,7 @@ import { NO_PHOTO_URL } from '../../../data/constants';
 import { IPlace, IPlacePhoto } from '../../../dux/init/initApi';
 import { ReactComponent as CommentIcon } from './img/comment.svg';
 import { ReactComponent as LocationIcon } from './img/location.svg';
+import { ReactComponent as StarIcon } from './img/star.svg';
 
 interface IPlaceCard
   extends React.DetailedHTMLProps<
@@ -42,10 +43,16 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
               <StyledLocationIcon />
               <Adress>{place.details.formatted_address}</Adress>
             </Location>
-            <Reviews>
-              <StyledCommentIcon />
-              <ReviewCount>{place.details.reviews.length}</ReviewCount>
-            </Reviews>
+            <Right>
+              <Rate>
+                <StyledStarIcon />
+                <RateCount>{place.details.rating}</RateCount>
+              </Rate>
+              <Reviews>
+                <StyledCommentIcon />
+                <ReviewCount>{place.details.reviews.length}</ReviewCount>
+              </Reviews>
+            </Right>
           </Info>
         </PlaceDescr>
       </Card>
@@ -92,6 +99,10 @@ const Location = styled.div`
   font-size: 12px;
 `;
 
+const Right = styled.div`
+  display: flex;
+`;
+
 const Adress = styled.span`
   vertical-align: middle;
 `;
@@ -99,13 +110,31 @@ const Adress = styled.span`
 const Reviews = styled.div`
   white-space: nowrap;
   font-size: 12px;
+  margin-left: 8px;
 `;
 
 const ReviewCount = styled.span`
   vertical-align: middle;
 `;
 
+const Rate = styled.div`
+  white-space: nowrap;
+  font-size: 12px;
+  margin-left: 8px;
+`;
+
+const RateCount = styled.span`
+  vertical-align: middle;
+`;
+
 const StyledLocationIcon = styled(LocationIcon)`
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  vertical-align: middle;
+`;
+
+const StyledStarIcon = styled(StarIcon)`
   width: 16px;
   height: 16px;
   margin-right: 4px;
