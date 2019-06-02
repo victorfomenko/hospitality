@@ -130,7 +130,7 @@ const RankingContainer = styled.div`
 `;
 
 const Rate = styled.div`
-  font-size: 18px;
+  font-size: 22px;
   display: flex;
 `;
 
