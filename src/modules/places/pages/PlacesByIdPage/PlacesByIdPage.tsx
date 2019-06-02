@@ -8,6 +8,8 @@ import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../../../data/constants';
 import { IPlaceCollection, IPlacePhoto } from '../../../../dux/init/initApi';
 import NotFoundPage from '../../../notFound';
 import AdressIcon from '../../components/AdressIcon';
+import BackLink from '../../components/BackLink';
+
 import Rating from '../../components/Rating';
 
 interface IPlacesByIdPageProps extends RouteComponentProps<{ id: string }> {
@@ -39,6 +41,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
     <Place>
       <PlacePhoto bgImg={imgUrl} />
       <Content>
+        <BackLink to="/places" />
         <PlaceName>{place.name}</PlaceName>
         <RankingContainer>
           <Rate>
@@ -115,6 +118,7 @@ const PlacePhoto = styled.div<IPlaceWrapper>`
 `;
 
 const Content = styled.div`
+  position: relative;
   padding: 35px 20px 0px 20px;
 `;
 
