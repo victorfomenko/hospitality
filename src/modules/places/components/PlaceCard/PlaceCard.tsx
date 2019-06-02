@@ -69,6 +69,7 @@ const Card = styled.div`
 const PlaceImg = styled.div<IPlaceImg>`
   display: inline-block;
   width: 100px;
+  min-width: 100px;
   height: 60px;
   margin-right: 20px;
   border-radius: 10px;
