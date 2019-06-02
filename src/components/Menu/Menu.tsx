@@ -49,6 +49,8 @@ const Nav = styled.nav`
 `;
 
 const NavItem = styled(NavLink)<NavLinkProps>`
+  height: 80%;
+  align-self: center;
   display: flex;
   align-items: center;
   width: 100%;
