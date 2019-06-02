@@ -35,11 +35,6 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
             onClick={handleNavClick}
           />
         ))}
-        <NavItem
-          isActive={state.index === gallery.items.length}
-          data-index={gallery.items.length}
-          onClick={handleNavClick}
-        />
       </Nav>
       <SwipeableViews
         index={state.index}
@@ -49,7 +44,15 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
         slideStyle={swipableSlideStyle}
         enableMouseEvents={true}
       >
-        {gallery.items.map(item => {
+        {gallery.items.map((item, index) => {
+          if (index === gallery.items.length - 1) {
+            return (
+              <>
+                <img key={item.image} src={item.image} alt={item.name} />
+                <Button to="/chatbot">Start now</Button>
+              </>
+            );
+          }
           return <img key={item.image} src={item.image} alt={item.name} />;
         })}
         <LastSection>
@@ -118,6 +121,7 @@ const LastSection = styled.div`
 `;
 
 const Button = styled(Link)`
+  white-space: nowrap;
   font-size: 18px;
   font-weight: 500;
   background: linear-gradient(to right, #15b0e9, #99d8bc);
