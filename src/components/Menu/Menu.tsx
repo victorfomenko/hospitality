@@ -45,6 +45,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   box-shadow: rgba(0, 0, 0, 0.1) 0px -5px 50px;
+  z-index: 1;
 `;
 
 const NavItem = styled(NavLink)<NavLinkProps>`
@@ -53,6 +54,7 @@ const NavItem = styled(NavLink)<NavLinkProps>`
   width: 100%;
   justify-content: center;
   cursor: pointer;
+  border-right: 1px solid #eaeaea;
   &.active {
     svg {
       fill: url(#icon-gradient) #6093f8;
@@ -63,6 +65,9 @@ const NavItem = styled(NavLink)<NavLinkProps>`
     height: 32px;
     fill: #ccc;
     display: inline-block;
+  }
+  &:last-child {
+    border-right: none;
   }
 `;
 
