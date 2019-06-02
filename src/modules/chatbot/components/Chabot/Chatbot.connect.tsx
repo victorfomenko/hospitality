@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import * as chatbotDux from '../../../../dux/chatbot/chatbotDux';
 import { IAppState } from '../../../../dux/duxRoot';
-import ChatbotPage from './ChatbotPage';
+import Chatbot from './Chatbot';
 
 const mapStateToProps = (state: IAppState) => ({
   isLoading: chatbotDux.loadingSelector(state),
@@ -15,4 +15,4 @@ const mapDispatch = {
 export default connect(
   mapStateToProps,
   mapDispatch,
-)(ChatbotPage);
+)(Chatbot);

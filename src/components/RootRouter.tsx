@@ -6,6 +6,7 @@ import { IAppState } from '../dux/duxRoot';
 import * as initDux from '../dux/init/initDux';
 import CategoriesPage from '../modules/categories';
 import ChatbotPage from '../modules/chatbot';
+import Chatbot from '../modules/chatbot/components/Chabot';
 import NotFoundPage from '../modules/notFound';
 import { PlacesByIdPage, PlacesPage } from '../modules/places';
 import SavedPage from '../modules/saved';
@@ -30,6 +31,7 @@ const RootRouter = (props: IRootRouterProps) => {
       {collectionId && (
         <Router history={history}>
           <Layout>
+            <Chatbot />
             <Switch>
               <Redirect from="/" exact={true} to="/welcome" />
               <Route path="/welcome" component={WelcomePage} />

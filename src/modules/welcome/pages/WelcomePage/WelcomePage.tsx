@@ -47,10 +47,10 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
         {gallery.items.map((item, index) => {
           if (index === gallery.items.length - 1) {
             return (
-              <>
-                <img key={item.image} src={item.image} alt={item.name} />
+              <React.Fragment key={item.image}>
+                <img src={item.image} alt={item.name} />
                 <Button to="/chatbot">Start now</Button>
-              </>
+              </React.Fragment>
             );
           }
           return <img key={item.image} src={item.image} alt={item.name} />;
