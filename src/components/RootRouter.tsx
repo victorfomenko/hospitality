@@ -8,6 +8,7 @@ import CategoriesPage from '../modules/categories';
 import ChatbotPage from '../modules/chatbot';
 import NotFoundPage from '../modules/notFound';
 import { PlacesByIdPage, PlacesPage } from '../modules/places';
+import SavedPage from '../modules/saved';
 import WelcomePage from '../modules/welcome';
 import Layout from './Layout';
 
@@ -36,6 +37,7 @@ const RootRouter = (props: IRootRouterProps) => {
               <Route path="/categories" component={CategoriesPage} />
               <Route path="/places" exact={true} component={PlacesPage} />
               <Route path="/places/:id" component={PlacesByIdPage} />
+              <Route path="/saved" component={SavedPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </Layout>

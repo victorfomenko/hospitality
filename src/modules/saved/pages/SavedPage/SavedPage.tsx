@@ -1,37 +1,35 @@
 import styled from '@emotion/styled';
+import storage from 'local-storage-fallback';
 import React, { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 import PlaceCard from '../../../../components/PlaceCard';
-import { CATEGORIES_KEY, CHATBOT_KEY } from '../../../../data/constants';
+import {
+  PLACE_COLLECTION_KEY,
+  SAVED_PLACES_KEY,
+} from '../../../../data/constants';
 import { IPlaceCollection } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 
-interface IPlacePageProps {
+interface ISavedPageProps extends RouteComponentProps<{ id: string }> {
   collection: IPlaceCollection;
 }
 
-const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
-  const [categories] = useStateWithLocalStorage(CATEGORIES_KEY, []);
-  const [chatbot] = useStateWithLocalStorage(CHATBOT_KEY, {});
-  const isEmpty = !categories.length && !Object.keys(chatbot).length;
-  const places = collection.places.filter(item =>
-    categories.includes(item.type),
-  );
+const SavedPage: FunctionComponent<ISavedPageProps> = ({ collection }) => {
+  const placeCollectionId = storage.getItem(PLACE_COLLECTION_KEY) || '';
+  const [placesById] = useStateWithLocalStorage(SAVED_PLACES_KEY, {});
+  const savedPlaces: string[] = placesById[placeCollectionId] || [];
 
-  return isEmpty ? (
+  return savedPlaces.length === 0 ? (
     <Empty>
-      <div>
-        For get recomended places plese answer for couple questions on{' '}
-        <Link to="/categories">categories page</Link> or talk with our{' '}
-        <Link to="/chatbot">assistant</Link>
-      </div>
+      <div>You have no saved places</div>
     </Empty>
   ) : (
     <Wrapper>
-      <Title>Recomendation</Title>
-      {places.map(place => (
-        <PlaceCard key={place.id} place={place} />
-      ))}
+      <Title>Saved places</Title>
+      {savedPlaces.map(placeId => {
+        const place = collection.places.find(item => item.id === placeId);
+        return place && <PlaceCard key={placeId} place={place} />;
+      })}
     </Wrapper>
   );
 };
@@ -68,4 +66,4 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-export default PlacesPage;
+export default SavedPage;

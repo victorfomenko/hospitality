@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
-import { NavLink, NavLinkProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { ReactComponent as BackIcon } from './img/arrowBack.svg';
 
-const BackLink: FunctionComponent<NavLinkProps> = props => {
+const BackLink: FunctionComponent<RouteComponentProps> = props => {
   return (
-    <StyledNavLink {...props}>
+    <NavLink onClick={props.history.goBack} {...props}>
       <BackIcon />
-    </StyledNavLink>
+    </NavLink>
   );
 };
 
-const StyledNavLink = styled(NavLink)`
+const NavLink = styled.div`
   cursor: pointer;
   height: 50px;
   width: 50px;
@@ -32,4 +32,4 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-export default BackLink;
+export default withRouter(BackLink);

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../../../data/constants';
-import { IPlace, IPlacePhoto } from '../../../../dux/init/initApi';
+import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../data/constants';
+import { IPlace, IPlacePhoto } from '../../dux/init/initApi';
 import { ReactComponent as CommentIcon } from './img/comment.svg';
 import { ReactComponent as LocationIcon } from './img/location.svg';
 import { ReactComponent as StarIcon } from './img/star.svg';

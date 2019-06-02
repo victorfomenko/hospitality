@@ -1,15 +1,22 @@
 import styled from '@emotion/styled';
+import storage from 'local-storage-fallback';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import SwipeableViews from 'react-swipeable-views';
 import Tab from '../../../../components/Tab';
 import Tabs from '../../../../components/Tabs';
-import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../../../data/constants';
+import {
+  GOOGLE_PHOTO_API,
+  NO_PHOTO_URL,
+  PLACE_COLLECTION_KEY,
+  SAVED_PLACES_KEY,
+} from '../../../../data/constants';
 import { IPlaceCollection, IPlacePhoto } from '../../../../dux/init/initApi';
+import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import NotFoundPage from '../../../notFound';
+import ActionButton from '../../components/ActionButton';
 import AdressIcon from '../../components/AdressIcon';
 import BackLink from '../../components/BackLink';
-
 import Rating from '../../components/Rating';
 
 interface IPlacesByIdPageProps extends RouteComponentProps<{ id: string }> {
@@ -25,9 +32,16 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   collection,
 }) => {
   const [state, setState] = React.useState(0);
-
+  const placeCollectionId = storage.getItem(PLACE_COLLECTION_KEY) || '';
+  const [placesById, setPlacesById] = useStateWithLocalStorage(
+    SAVED_PLACES_KEY,
+    {},
+  );
   const { id } = match.params;
+  const savedPlaces = placesById[placeCollectionId] || [];
+  const indexOfSavedPlace = savedPlaces.indexOf(id);
   const place = collection.places.find(item => item.id === id);
+
   if (!place) {
     return <NotFoundPage />;
   }
@@ -37,11 +51,30 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
     setState(index);
   };
 
+  const handleSavePlace = () => {
+    if (indexOfSavedPlace !== -1) {
+      setPlacesById({
+        [placeCollectionId]: [
+          ...savedPlaces.slice(0, indexOfSavedPlace),
+          ...savedPlaces.slice(indexOfSavedPlace + 1, savedPlaces.length),
+        ],
+      });
+    } else {
+      setPlacesById({ [placeCollectionId]: [...savedPlaces, id] });
+    }
+  };
+
   return (
     <Place>
       <PlacePhoto bgImg={imgUrl} />
       <Content>
-        <BackLink to="/places" />
+        <BackLink />
+        {indexOfSavedPlace === -1 ? (
+          <ActionButton type="save" onClick={handleSavePlace} />
+        ) : (
+          <ActionButton type="remove" onClick={handleSavePlace} />
+        )}
+
         <PlaceName>{place.name}</PlaceName>
         <RankingContainer>
           <Rate>
