@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import SwipeableViews from 'react-swipeable-views';
+import Tab from '../../../../components/Tab';
+import Tabs from '../../../../components/Tabs';
 import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../../../data/constants';
 import { IPlaceCollection, IPlacePhoto } from '../../../../dux/init/initApi';
 import NotFoundPage from '../../../notFound';
@@ -20,12 +22,18 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   match,
   collection,
 }) => {
+  const [state, setState] = React.useState(0);
+
   const { id } = match.params;
   const place = collection.places.find(item => item.id === id);
   if (!place) {
     return <NotFoundPage />;
   }
   const imgUrl = prepareImageUrl(place.details.photos);
+
+  const handleTabChange = (e: React.ChangeEvent<{}>, index: number) => {
+    setState(index);
+  };
 
   return (
     <Place>
@@ -39,29 +47,44 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
           </Rate>
           <Reviews>{place.details.reviews.length} Google reviews</Reviews>
         </RankingContainer>
-        <div>{place.name}</div>
+        <div>
+          {`${
+            place.name
+          } is a fine-dining restaurant in Melbourne, Australia, owned and operated by Ben Shewry.
+          It has won several awards in Australia, and has been included in The World's 50 Best Restaurants since 2010.
+          Its current position on the list places it as the top restaurant in Australia.`}
+        </div>
         <PlaceAdress>
           <StyledAdressIcon />
           {place.details.formatted_address}
         </PlaceAdress>
-        <SwipeableViews
-          index={0}
-          enableMouseEvents={true}
-          containerStyle={containerStyle}
-        >
-          <ScrollWrapper>
-            {place.details.photos.map(item => {
-              return (
-                <ImgWrapper key={item.photo_reference}>
-                  <img
-                    src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
-                    alt={place.name}
-                  />
-                </ImgWrapper>
-              );
-            })}
-          </ScrollWrapper>
-        </SwipeableViews>
+        <TabsWrapper>
+          <Tabs value={state} onChange={handleTabChange}>
+            <Tab label="Gallery" />
+            <Tab label="Reviews" />
+          </Tabs>
+        </TabsWrapper>
+        {state === 0 && (
+          <SwipeableViews
+            index={0}
+            enableMouseEvents={true}
+            containerStyle={containerStyle}
+          >
+            <ScrollWrapper>
+              {place.details.photos.slice(1).map(item => {
+                return (
+                  <ImgWrapper key={item.photo_reference}>
+                    <img
+                      src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
+                      alt={place.name}
+                    />
+                  </ImgWrapper>
+                );
+              })}
+            </ScrollWrapper>
+          </SwipeableViews>
+        )}
+        {state === 1 && 'Reviews'}
       </Content>
     </Place>
   );
@@ -113,7 +136,7 @@ const Rate = styled.div`
 
 const RateValue = styled.div`
   color: #ffc850;
-  margin-left: 15px;
+  margin-left: 10px;
   font-weight: bold;
 `;
 
@@ -123,7 +146,7 @@ const Reviews = styled.div`
 `;
 
 const PlaceAdress = styled.div`
-  margin: 32px 0 16px 0;
+  margin: 32px 0 24px 0;
   display: flex;
   max-width: 80%;
 `;
@@ -150,6 +173,10 @@ const ImgWrapper = styled.div`
     border-radius: 10px;
     height: 146px;
   }
+`;
+
+const TabsWrapper = styled.div`
+  margin-bottom: 24px;
 `;
 
 export default PlacesByIdPage;

@@ -16,6 +16,9 @@ const Rating: FunctionComponent<any> = props => {
 
 const ActiveStar = styled(StarIcon)`
   fill: #ffdc64;
+  & #part2 {
+    fill: #ffc850;
+  }
 `;
 
 const EmptyStar = styled(StarIcon)`
