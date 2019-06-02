@@ -27,6 +27,7 @@ export interface IPlace {
     price_level: number;
     url: string;
     user_ratings_total: number;
+    adr_address: string;
     formatted_address: string;
     photos: IPlacePhoto[];
     reviews: IPlaceReview[];

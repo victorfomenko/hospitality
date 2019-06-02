@@ -61,7 +61,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
         <TabsWrapper>
           <Tabs value={state} onChange={handleTabChange}>
             <Tab label="Gallery" />
-            <Tab label="Reviews" />
+            {/* <Tab label="Reviews" /> */}
           </Tabs>
         </TabsWrapper>
         {state === 0 && (
