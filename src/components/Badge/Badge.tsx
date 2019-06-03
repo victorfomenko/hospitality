@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
+import { ReactComponent as AddIcon } from './img/add.svg';
 import { ReactComponent as CheckIcon } from './img/check.svg';
 
 interface IBadge
@@ -27,17 +28,19 @@ const Badge: FunctionComponent<IBadge> = ({
   };
   return (
     <StyledBadge onClick={handleClick} isActive={isActive} {...props}>
-      {isActive && <StyledCheckIcon />}
       {children}
+      {isActive ? <StyledCheckIcon /> : <StyledAddIcon />}
     </StyledBadge>
   );
 };
 
 const StyledBadge = styled.div<ICategory>`
+  height: 48px;
+  padding: 12px 24px;
   background-color: #ffffff;
-  border-radius: 50%;
+  border-radius: 50px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   color: #1f437f;
   font-size: 18px;
@@ -49,12 +52,15 @@ const StyledBadge = styled.div<ICategory>`
 `;
 
 const StyledCheckIcon = styled(CheckIcon)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   background-image: url('./img/check.svg');
+`;
+
+const StyledAddIcon = styled(AddIcon)`
+  width: 22px;
+  height: 22px;
+  background-image: url('./img/add.svg');
 `;
 
 export default Badge;

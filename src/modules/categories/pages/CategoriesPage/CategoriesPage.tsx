@@ -19,8 +19,7 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
 }) => {
   const [state, setState] = useStateWithLocalStorage(CATEGORIES_KEY, []);
   const categoryStyle = {
-    width: `${width / 4}px`,
-    height: `${width / 4}px`,
+    width: `${width / 2.5}px`,
   };
 
   const handleClickCategory = (
@@ -115,7 +114,7 @@ const CategoriesWrapper = styled.div`
 `;
 
 const Categories = styled.div`
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto;
   display: grid;
   grid-row-gap: 25px;
   justify-content: space-between;
