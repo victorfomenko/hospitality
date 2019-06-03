@@ -123,6 +123,7 @@ const Categories = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 50px;
 `;
 
 const Button = styled(Link)`

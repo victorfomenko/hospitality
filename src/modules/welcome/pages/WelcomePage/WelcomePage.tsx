@@ -55,9 +55,6 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
           }
           return <img key={item.image} src={item.image} alt={item.name} />;
         })}
-        <LastSection>
-          <Button to="/chatbot">Start now</Button>
-        </LastSection>
       </SwipeableViews>
     </Wrapper>
   );
@@ -109,15 +106,6 @@ const NavItem = styled.div<INavItem>`
   cursor: pointer;
   ${({ isActive }) => isActive && 'background-color: #30b9fb;'}
   transition: background-color 300ms;
-`;
-
-const LastSection = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  text-align: center;
-  justify-content: center;
 `;
 
 const Button = styled(Link)`
