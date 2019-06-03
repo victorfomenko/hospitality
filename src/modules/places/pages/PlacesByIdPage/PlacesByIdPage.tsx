@@ -54,13 +54,17 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   const handleSavePlace = () => {
     if (indexOfSavedPlace !== -1) {
       setPlacesById({
+        ...placesById,
         [placeCollectionId]: [
           ...savedPlaces.slice(0, indexOfSavedPlace),
           ...savedPlaces.slice(indexOfSavedPlace + 1, savedPlaces.length),
         ],
       });
     } else {
-      setPlacesById({ [placeCollectionId]: [...savedPlaces, id] });
+      setPlacesById({
+        ...placesById,
+        [placeCollectionId]: [...savedPlaces, id],
+      });
     }
   };
 
@@ -107,7 +111,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
             containerStyle={containerStyle}
           >
             <ScrollWrapper>
-              {place.details.photos.slice(1).map(item => {
+              {(place.details.photos || []).slice(1).map(item => {
                 return (
                   <ImgWrapper key={item.photo_reference}>
                     <img
@@ -126,7 +130,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   );
 };
 
-const prepareImageUrl = (photoList: IPlacePhoto[]) => {
+const prepareImageUrl = (photoList: IPlacePhoto[] = []) => {
   if (!photoList.length) {
     return NO_PHOTO_URL;
   }
@@ -190,6 +194,7 @@ const PlaceAdress = styled.div`
 
 const StyledAdressIcon = styled(AdressIcon)`
   width: 20px;
+  min-width: 20px;
   height: 20px;
   margin-right: 4px;
 `;

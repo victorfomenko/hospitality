@@ -22,7 +22,7 @@ interface IPlaceImg {
 const PlaceCard: FunctionComponent<IPlaceCard> = ({
   place,
 }: IPlaceCard): JSX.Element => {
-  const prepareImageUrl = (photoList: IPlacePhoto[]) => {
+  const prepareImageUrl = (photoList: IPlacePhoto[] = []) => {
     if (!photoList.length) {
       return NO_PHOTO_URL;
     }
@@ -127,6 +127,7 @@ const RateCount = styled.span`
 
 const StyledLocationIcon = styled(LocationIcon)`
   width: 16px;
+  min-width: 16px;
   height: 16px;
   margin-right: 4px;
   vertical-align: middle;
@@ -134,6 +135,7 @@ const StyledLocationIcon = styled(LocationIcon)`
 
 const StyledStarIcon = styled(StarIcon)`
   width: 16px;
+  min-width: 16px;
   height: 16px;
   margin-right: 4px;
   vertical-align: middle;
@@ -141,6 +143,7 @@ const StyledStarIcon = styled(StarIcon)`
 
 const StyledCommentIcon = styled(CommentIcon)`
   width: 16px;
+  min-width: 16px;
   height: 16px;
   margin-right: 4px;
   vertical-align: middle;

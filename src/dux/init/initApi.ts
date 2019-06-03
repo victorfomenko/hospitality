@@ -29,7 +29,7 @@ export interface IPlace {
     user_ratings_total: number;
     adr_address: string;
     formatted_address: string;
-    photos: IPlacePhoto[];
+    photos?: IPlacePhoto[];
     reviews: IPlaceReview[];
   };
 }

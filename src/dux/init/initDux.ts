@@ -2,7 +2,11 @@ import storage from 'local-storage-fallback';
 import qs from 'qs';
 import { createAction, createReducer } from 'redux-act';
 import { createSelector } from 'reselect';
-import { PLACE_COLLECTION_KEY } from '../../data/constants';
+import {
+  CATEGORIES_KEY,
+  CHATBOT_KEY,
+  PLACE_COLLECTION_KEY,
+} from '../../data/constants';
 import { DispatchAsync, IAppState } from '../duxRoot';
 import {
   getGalleryById,
@@ -18,6 +22,12 @@ const getCollectionId = () => {
   });
   let id = placeCollectionId || null;
   if (placeCollectionId) {
+    const oldId = storage.getItem(PLACE_COLLECTION_KEY);
+    // remove existing data if collection id has been changed
+    if (oldId !== id) {
+      storage.removeItem(CHATBOT_KEY);
+      storage.removeItem(CATEGORIES_KEY);
+    }
     storage.setItem(PLACE_COLLECTION_KEY, id);
     window.location.search = `${qs.stringify(queryParams, {
       addQueryPrefix: Object.keys(queryParams).length ? true : false,
