@@ -47,7 +47,9 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
               </Rate>
               <Reviews>
                 <StyledCommentIcon />
-                <ReviewCount>{place.details.reviews.length}</ReviewCount>
+                <ReviewCount>
+                  {(place.details.reviews || []).length}
+                </ReviewCount>
               </Reviews>
             </Right>
           </Info>

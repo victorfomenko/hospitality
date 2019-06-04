@@ -18,6 +18,7 @@ import ActionButton from '../../components/ActionButton';
 import AdressIcon from '../../components/AdressIcon';
 import BackLink from '../../components/BackLink';
 import Rating from '../../components/Rating';
+import Review from '../../components/Review';
 
 interface IPlacesByIdPageProps extends RouteComponentProps<{ id: string }> {
   collection: IPlaceCollection;
@@ -85,7 +86,9 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
             <Rating placeholderRating={place.details.rating} />
             <RateValue>{place.details.rating}</RateValue>
           </Rate>
-          <Reviews>{place.details.reviews.length} Google reviews</Reviews>
+          <Reviews>
+            {(place.details.reviews || []).length} Google reviews
+          </Reviews>
         </RankingContainer>
         <div>
           {`${
@@ -100,8 +103,8 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
         </PlaceAdress>
         <TabsWrapper>
           <Tabs value={state} onChange={handleTabChange}>
-            <Tab label="Gallery" />
-            {/* <Tab label="Reviews" /> */}
+            {place.details.photos && <Tab label="Gallery" />}
+            {place.details.reviews && <Tab label="Reviews" />}
           </Tabs>
         </TabsWrapper>
         {state === 0 && (
@@ -124,7 +127,12 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
             </ScrollWrapper>
           </SwipeableViews>
         )}
-        {state === 1 && 'Reviews'}
+        {state === 1 &&
+          (place.details.reviews || []).map(review => (
+            <React.Fragment key={review.time}>
+              <Review {...review} />
+            </React.Fragment>
+          ))}
       </Content>
     </Place>
   );

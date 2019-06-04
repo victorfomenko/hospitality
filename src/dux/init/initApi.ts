@@ -30,7 +30,7 @@ export interface IPlace {
     adr_address: string;
     formatted_address: string;
     photos?: IPlacePhoto[];
-    reviews: IPlaceReview[];
+    reviews?: IPlaceReview[];
   };
 }
 
@@ -41,7 +41,7 @@ export interface IPlacePhoto {
   html_attributions: string;
 }
 
-interface IPlaceReview {
+export interface IPlaceReview {
   author_name: string;
   author_url: string;
   language: string;
