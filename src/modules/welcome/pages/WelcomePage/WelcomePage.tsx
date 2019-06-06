@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import { IGalleryRes } from '../../../../dux/init/initApi';
 interface IWelcomeProps {
-  gallery: IGalleryRes;
+  gallery: IGalleryRes | null;
 }
 
 interface INavItem {
@@ -23,7 +23,7 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
     setState({ index });
   };
 
-  return (
+  return gallery ? (
     <Wrapper>
       <Title>{gallery.name}</Title>
       <Nav>
@@ -57,7 +57,7 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
         })}
       </SwipeableViews>
     </Wrapper>
-  );
+  ) : null;
 };
 
 const swipableViewStyle = {

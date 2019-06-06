@@ -11,6 +11,7 @@ export interface IPlaceCollection {
   latitude: string;
   longitude: string;
   places: IPlace[];
+  customAttributes?: { [key: string]: any };
 }
 
 export interface IPlace {

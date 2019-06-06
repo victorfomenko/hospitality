@@ -49,7 +49,7 @@ export interface IInitState {
 
 interface ISuccess {
   collection: IPlaceCollection;
-  gallery: IGalleryRes;
+  gallery: IGalleryRes | null;
 }
 
 // Default state
@@ -80,7 +80,11 @@ export const apiInit = () => async (dispatch: DispatchAsync) => {
   dispatch(loading());
   try {
     const { placeCollection } = await getPlaceCollectionById(collectionId!);
-    const gallery = await getGalleryById('5b03c01c951f0c114344f74e');
+    const galleryId = placeCollection.customAttributes
+      ? placeCollection.customAttributes.galleryId
+      : null;
+
+    const gallery = galleryId ? await getGalleryById(galleryId) : null;
     dispatch(success({ collection: placeCollection, gallery }));
   } catch (e) {
     dispatch(error(e));
