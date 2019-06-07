@@ -20,6 +20,7 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
   startLoading,
   finishLoading,
   isLoading,
+  history,
 }) => {
   const isChatbotUrl = window.location.pathname.includes('/chatbot');
   const [url] = React.useState(() => {
@@ -61,6 +62,7 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
     const oldProfiles = proflesJSON ? JSON.parse(proflesJSON) : [];
     const newProfiles = [...new Set([...oldProfiles, profile])];
     storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
+    history.push('/categories');
   };
 
   const handleIframeLoad = () => {
