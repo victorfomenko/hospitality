@@ -4,7 +4,7 @@ import React, { FunctionComponent } from 'react';
 import Iframe from 'react-iframe';
 import { RouteComponentProps, withRouter } from 'react-router';
 import CircularProgress from '../../../../components/CircularProgress/CurcularProgress';
-import { CHATBOT_KEY } from '../../../../data/constants';
+import { CHATBOT_KEY, PROFILES_KEY } from '../../../../data/constants';
 import { IChatbotMessage } from '../../../../dux/chatbot/chatbotDux';
 
 interface IChatbotProps extends RouteComponentProps {
@@ -46,10 +46,21 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
   const handleMessage = ({ data }: { data: JSON }) => {
     if (data && typeof data === 'string') {
       const { type, data: parsedData }: IChatbotMessage = JSON.parse(data);
+      const { customAttributes } = parsedData;
       if (type === 'chatbotChange') {
         storage.setItem(CHATBOT_KEY, JSON.stringify(parsedData));
+        if (customAttributes && customAttributes.profile) {
+          upsertProfile(customAttributes.profile);
+        }
       }
     }
+  };
+
+  const upsertProfile = (profile: string) => {
+    const proflesJSON = storage.getItem(PROFILES_KEY);
+    const oldProfiles = proflesJSON ? JSON.parse(proflesJSON) : [];
+    const newProfiles = [...new Set([...oldProfiles, profile])];
+    storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
   };
 
   const handleIframeLoad = () => {

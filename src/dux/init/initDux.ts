@@ -6,6 +6,7 @@ import {
   CATEGORIES_KEY,
   CHATBOT_KEY,
   PLACE_COLLECTION_KEY,
+  PROFILES_KEY,
 } from '../../data/constants';
 import { DispatchAsync, IAppState } from '../duxRoot';
 import {
@@ -27,6 +28,7 @@ const getCollectionId = () => {
     if (oldId !== id) {
       storage.removeItem(CHATBOT_KEY);
       storage.removeItem(CATEGORIES_KEY);
+      storage.removeItem(PROFILES_KEY);
     }
     storage.setItem(PLACE_COLLECTION_KEY, id);
     window.location.search = `${qs.stringify(queryParams, {

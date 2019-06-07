@@ -20,6 +20,7 @@ export interface IPlace {
   type: string;
   hidden: boolean;
   googlePlaceId: string;
+  profile: string[];
   details: {
     id: string;
     name: string;
