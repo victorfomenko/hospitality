@@ -28,7 +28,6 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   if (categories.length !== 0) {
     places = places.filter(item => categories.includes(item.type));
   }
-
   return isEmpty ? (
     <Empty>
       <div>

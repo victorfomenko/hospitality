@@ -53,16 +53,27 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
         if (customAttributes && customAttributes.profile) {
           upsertProfile(customAttributes.profile);
         }
+        if (customAttributes && !customAttributes.back) {
+          removeLastProfile();
+        }
       }
     }
   };
 
   const upsertProfile = (profile: string) => {
     const proflesJSON = storage.getItem(PROFILES_KEY);
-    const oldProfiles = proflesJSON ? JSON.parse(proflesJSON) : [];
+    const oldProfiles = proflesJSON ? JSON.parse(proflesJSON) || [] : [];
+
     const newProfiles = [...new Set([...oldProfiles, profile])];
     storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
-    history.push('/categories');
+  };
+
+  const removeLastProfile = () => {
+    const proflesJSON = storage.getItem(PROFILES_KEY);
+    const profiles = proflesJSON ? JSON.parse(proflesJSON) || [] : [];
+
+    const newProfiles = [...profiles.slice(0, -1)];
+    storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
   };
 
   const handleIframeLoad = () => {
