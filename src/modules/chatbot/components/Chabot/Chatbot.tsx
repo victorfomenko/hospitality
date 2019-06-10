@@ -53,7 +53,7 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
         if (customAttributes && customAttributes.profile) {
           upsertProfile(customAttributes.profile);
         }
-        if (customAttributes && !customAttributes.back) {
+        if (!customAttributes || !customAttributes.back) {
           removeLastProfile();
         }
         if (parsedData.isLast) {
