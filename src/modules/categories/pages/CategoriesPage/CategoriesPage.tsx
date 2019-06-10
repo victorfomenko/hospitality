@@ -13,6 +13,22 @@ interface ICategoriesProps {
   children?: ReactNode;
 }
 
+const categoriesMap: { [key: string]: string } = {
+  bakery: 'Bakery',
+  bar: 'Bar',
+  cafe: 'Cafe',
+  casino: 'Casino',
+  clothing_store: 'Clothes',
+  gym: 'Gym',
+  jewelry_store: 'Jewelry',
+  movie_theater: 'Movie theater',
+  night_club: 'Night club',
+  pharmacy: 'Pharmacy',
+  restaurant: 'Restaurant',
+  shopping_mall: 'Shopping mall',
+  zoo: 'Zoo',
+};
+
 const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
   width,
   categories,
@@ -53,7 +69,7 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
               onClick={handleClickCategory}
               isActive={state.includes(item)}
             >
-              {item}
+              {categoriesMap[item] ? categoriesMap[item] : item}
             </Badge>
           ))}
         </Categories>
