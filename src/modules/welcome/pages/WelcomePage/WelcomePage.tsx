@@ -48,31 +48,33 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
           if (index === gallery.items.length - 1) {
             return (
               <React.Fragment key={item.image}>
-                <img src={item.image} alt={item.name} />
+                <Img src={item.image} alt={item.name} />
                 <Button to="/chatbot">Start now</Button>
               </React.Fragment>
             );
           }
-          return <img key={item.image} src={item.image} alt={item.name} />;
+          return <Img key={item.image} src={item.image} alt={item.name} />;
         })}
       </SwipeableViews>
     </Wrapper>
   ) : null;
 };
 
-const swipableViewStyle = {
+const swipableViewStyle: React.CSSProperties = {
   flexGrow: 1,
 };
 
-const swipableContainerStyle = {
+const swipableContainerStyle: React.CSSProperties = {
   height: '100%',
 };
-const swipableSlideStyle = {
+
+const swipableSlideStyle: React.CSSProperties = {
   margin: 'auto',
   height: '100%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  flexDirection: 'column',
 };
 
 const Wrapper = styled.div`
@@ -108,6 +110,11 @@ const NavItem = styled.div<INavItem>`
   transition: background-color 300ms;
 `;
 
+const Img = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+`;
+
 const Button = styled(Link)`
   white-space: nowrap;
   font-size: 18px;
@@ -121,8 +128,7 @@ const Button = styled(Link)`
   justify-content: center;
   color: white !important;
   border-radius: 24px;
-  position: absolute;
-  bottom: 10%;
+  margin-top: 40px;
 `;
 
 export default WelcomePage;
