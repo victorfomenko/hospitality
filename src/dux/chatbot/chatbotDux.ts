@@ -17,6 +17,7 @@ export interface IChatbotMessage {
     type: string;
     useMainCta: boolean;
     ctaUrl: boolean;
+    isLast: boolean;
     customAttributes: { [key: string]: any };
   };
 }

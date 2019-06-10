@@ -56,6 +56,9 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
         if (customAttributes && !customAttributes.back) {
           removeLastProfile();
         }
+        if (parsedData.isLast) {
+          history.push('/categories');
+        }
       }
     }
   };
