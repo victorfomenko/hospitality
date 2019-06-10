@@ -53,7 +53,7 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
         if (customAttributes && customAttributes.profile) {
           upsertProfile(customAttributes.profile);
         }
-        if (!customAttributes || !customAttributes.back) {
+        if (customAttributes && !customAttributes.back) {
           removeLastProfile();
         }
         if (parsedData.isLast) {
@@ -68,7 +68,9 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
     const oldProfiles = proflesJSON ? JSON.parse(proflesJSON) || [] : [];
 
     const newProfiles = [...new Set([...oldProfiles, profile])];
-    storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
+    setTimeout(() => {
+      storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
+    }, 0);
   };
 
   const removeLastProfile = () => {
