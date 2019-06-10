@@ -48,7 +48,7 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
           if (index === gallery.items.length - 1) {
             return (
               <React.Fragment key={item.image}>
-                <Img src={item.image} alt={item.name} />
+                <Img src={item.image} alt={item.name} isLast={true} />
                 <Button to="/chatbot">Start now</Button>
               </React.Fragment>
             );
@@ -95,6 +95,7 @@ const Title = styled.h1`
 const Nav = styled.div`
   width: 100%;
   height: 14px;
+  min-height: 14px;
   padding: 0 28px;
   display: flex;
 `;
@@ -110,9 +111,10 @@ const NavItem = styled.div<INavItem>`
   transition: background-color 300ms;
 `;
 
-const Img = styled.img`
+const Img = styled.img<{ isLast?: boolean }>`
   max-width: 100%;
   max-height: 100%;
+  ${({ isLast }) => isLast && 'max-height: calc(100% - 128px)'}
 `;
 
 const Button = styled(Link)`
@@ -121,6 +123,7 @@ const Button = styled(Link)`
   font-weight: 500;
   background: linear-gradient(to right, #15b0e9, #99d8bc);
   height: 48px;
+  min-height: 48px;
   padding: 0px 24px;
   cursor: pointer;
   display: flex;
@@ -129,6 +132,7 @@ const Button = styled(Link)`
   color: white !important;
   border-radius: 24px;
   margin-top: 40px;
+  margin-bottom: 40px;
 `;
 
 export default WelcomePage;
