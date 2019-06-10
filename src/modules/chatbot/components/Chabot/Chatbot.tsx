@@ -4,7 +4,11 @@ import React, { FunctionComponent } from 'react';
 import Iframe from 'react-iframe';
 import { RouteComponentProps, withRouter } from 'react-router';
 import CircularProgress from '../../../../components/CircularProgress/CurcularProgress';
-import { CHATBOT_KEY, PROFILES_KEY } from '../../../../data/constants';
+import {
+  CATEGORIES_KEY,
+  CHATBOT_KEY,
+  PROFILES_KEY,
+} from '../../../../data/constants';
 import { IChatbotMessage } from '../../../../dux/chatbot/chatbotDux';
 
 interface IChatbotProps extends RouteComponentProps {
@@ -68,9 +72,7 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
     const oldProfiles = proflesJSON ? JSON.parse(proflesJSON) || [] : [];
 
     const newProfiles = [...new Set([...oldProfiles, profile])];
-    setTimeout(() => {
-      storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
-    }, 0);
+    storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
   };
 
   const removeLastProfile = () => {
@@ -79,6 +81,7 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
 
     const newProfiles = [...profiles.slice(0, -1)];
     storage.setItem(PROFILES_KEY, JSON.stringify(newProfiles));
+    storage.removeItem(CATEGORIES_KEY);
   };
 
   const handleIframeLoad = () => {

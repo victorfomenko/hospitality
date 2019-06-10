@@ -6,6 +6,7 @@ import CategoriesPage from './CategoriesPage';
 
 const mapStateToProps = (state: IAppState) => ({
   categories: initDux.categoriesSelector(state),
+  places: initDux.placesSelector(state),
 });
 
 const mapDispatch = {

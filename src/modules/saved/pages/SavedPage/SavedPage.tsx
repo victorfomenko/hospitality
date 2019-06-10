@@ -39,7 +39,7 @@ const Empty = styled.div`
   padding: 50px;
   display: flex;
   align-items: center;
-  text-align: center;
+  justify-content: center;
   a {
     color: blue;
   }

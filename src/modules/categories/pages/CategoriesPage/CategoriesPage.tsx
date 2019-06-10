@@ -2,14 +2,15 @@ import styled from '@emotion/styled';
 import React, { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import Badge from '../../../../components/Badge/Badge';
-import { CATEGORIES_KEY } from '../../../../data/constants';
+import { CATEGORIES_KEY, PROFILES_KEY } from '../../../../data/constants';
+import { IPlace } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import withWidth from '../../../../utils/withWidth';
 
 interface ICategoriesProps {
   categories: string[];
   width: number;
-  height: number;
+  places: IPlace[];
   children?: ReactNode;
 }
 
@@ -31,9 +32,18 @@ const categoriesMap: { [key: string]: string } = {
 
 const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
   width,
-  categories,
+  places,
 }) => {
-  const [state, setState] = useStateWithLocalStorage(CATEGORIES_KEY, []);
+  const [savedCategories, setCategories] = useStateWithLocalStorage(
+    CATEGORIES_KEY,
+    [],
+  );
+  const [profiles] = useStateWithLocalStorage(PROFILES_KEY, []);
+  const categories = places
+    .filter(place =>
+      place.profile.find((profile: string) => profiles.includes(profile)),
+    )
+    .map(item => item.type);
   const categoryStyle = {
     width: `${width / 2.5}px`,
   };
@@ -42,18 +52,25 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     const { name } = e.currentTarget.dataset;
-    const index = state.indexOf(name);
+    const index = savedCategories.indexOf(name);
     if (index !== -1) {
-      setState([
-        ...state.slice(0, index),
-        ...state.slice(index + 1, state.length),
+      setCategories([
+        ...savedCategories.slice(0, index),
+        ...savedCategories.slice(index + 1, savedCategories.length),
       ]);
     } else {
-      setState([...state, name]);
+      setCategories([...savedCategories, name]);
     }
   };
 
-  return (
+  return categories.length === 0 ? (
+    <Empty>
+      <div>
+        Please tals with our <Link to="/chatbot">assistant</Link> to configure
+        categories
+      </div>
+    </Empty>
+  ) : (
     <Wrapper>
       <Title>
         What are you in the mood for?
@@ -67,14 +84,14 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
               style={categoryStyle}
               data-name={item}
               onClick={handleClickCategory}
-              isActive={state.includes(item)}
+              isActive={savedCategories.includes(item)}
             >
               {categoriesMap[item] ? categoriesMap[item] : item}
             </Badge>
           ))}
         </Categories>
       </CategoriesWrapper>
-      {state.length > 0 && (
+      {savedCategories.length > 0 && (
         <ButtonWrapper>
           <Button to="/places">Recomendations</Button>
         </ButtonWrapper>
@@ -82,6 +99,17 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
     </Wrapper>
   );
 };
+
+const Empty = styled.div`
+  height: 100%;
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  a {
+    color: blue;
+  }
+`;
 
 const Wrapper = styled.div`
   height: 100%;
