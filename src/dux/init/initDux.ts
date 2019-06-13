@@ -7,6 +7,7 @@ import {
   CHATBOT_KEY,
   PLACE_COLLECTION_KEY,
   PROFILES_KEY,
+  SAVED_PLACES_KEY,
 } from '../../data/constants';
 import { DispatchAsync, IAppState } from '../duxRoot';
 import {
@@ -23,13 +24,11 @@ const getCollectionId = () => {
   });
   let id = placeCollectionId || null;
   if (placeCollectionId) {
-    const oldId = storage.getItem(PLACE_COLLECTION_KEY);
-    // remove existing data if collection id has been changed
-    if (oldId !== id) {
-      storage.removeItem(CHATBOT_KEY);
-      storage.removeItem(CATEGORIES_KEY);
-      storage.removeItem(PROFILES_KEY);
-    }
+    // remove existing data if collection id has been provided
+    storage.removeItem(CHATBOT_KEY);
+    storage.removeItem(CATEGORIES_KEY);
+    storage.removeItem(PROFILES_KEY);
+    storage.removeItem(SAVED_PLACES_KEY);
     storage.setItem(PLACE_COLLECTION_KEY, id);
     window.location.search = `${qs.stringify(queryParams, {
       addQueryPrefix: Object.keys(queryParams).length ? true : false,
