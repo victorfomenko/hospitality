@@ -19,16 +19,21 @@ import {
 
 const getCollectionId = () => {
   const { search } = window.location;
-  const { placeCollectionId, ...queryParams } = qs.parse(search, {
+  const { placeCollectionId, reset, ...queryParams } = qs.parse(search, {
     ignoreQueryPrefix: true,
   });
   let id = placeCollectionId || null;
-  if (placeCollectionId) {
-    // remove existing data if collection id has been provided
+  // remove existing data if reset query param has been provided
+  if (reset !== undefined) {
     storage.removeItem(CHATBOT_KEY);
     storage.removeItem(CATEGORIES_KEY);
     storage.removeItem(PROFILES_KEY);
     storage.removeItem(SAVED_PLACES_KEY);
+    window.location.search = `${qs.stringify(queryParams, {
+      addQueryPrefix: Object.keys(queryParams).length ? true : false,
+    })}`;
+  }
+  if (placeCollectionId) {
     storage.setItem(PLACE_COLLECTION_KEY, id);
     window.location.search = `${qs.stringify(queryParams, {
       addQueryPrefix: Object.keys(queryParams).length ? true : false,
