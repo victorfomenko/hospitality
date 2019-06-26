@@ -2,11 +2,7 @@ import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import PlaceCard from '../../../../components/PlaceCard';
-import {
-  CATEGORIES_KEY,
-  CHATBOT_KEY,
-  PROFILES_KEY,
-} from '../../../../data/constants';
+import { CATEGORIES_KEY, CHATBOT_KEY } from '../../../../data/constants';
 import { IPlace, IPlaceCollection } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 
@@ -16,15 +12,10 @@ interface IPlacePageProps {
 
 const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   const [categories] = useStateWithLocalStorage(CATEGORIES_KEY, []);
-  const [profiles] = useStateWithLocalStorage(PROFILES_KEY, []);
   const [chatbot] = useStateWithLocalStorage(CHATBOT_KEY, {});
   const isEmpty = !categories.length && !Object.keys(chatbot).length;
+
   let places: IPlace[] = collection.places;
-  if (profiles.length !== 0) {
-    places = places.filter(item =>
-      item.profile.find((profile: string) => profiles.includes(profile)),
-    );
-  }
   if (categories.length !== 0) {
     places = places.filter(item => categories.includes(item.type));
   }

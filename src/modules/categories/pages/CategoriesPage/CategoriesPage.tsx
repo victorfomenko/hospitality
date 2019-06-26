@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import Badge from '../../../../components/Badge/Badge';
-import { CATEGORIES_KEY, PROFILES_KEY } from '../../../../data/constants';
+import { CATEGORIES_KEY } from '../../../../data/constants';
 import { IPlace } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import withWidth from '../../../../utils/withWidth';
@@ -28,6 +28,7 @@ const categoriesMap: { [key: string]: string } = {
   restaurant: 'Restaurant',
   shopping_mall: 'Shopping mall',
   zoo: 'Zoo',
+  yoga: 'Yoga',
 };
 
 const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
@@ -38,12 +39,7 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
     CATEGORIES_KEY,
     [],
   );
-  const [profiles] = useStateWithLocalStorage(PROFILES_KEY, []);
-  const categories = places
-    .filter(place =>
-      place.profile.find((profile: string) => profiles.includes(profile)),
-    )
-    .map(item => item.type);
+  const categories = places.map(item => item.type);
   const categoryStyle = {
     width: `${width / 2.5}px`,
   };

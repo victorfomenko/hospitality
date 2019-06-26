@@ -19,6 +19,8 @@ export interface IChatbotMessage {
     ctaUrl: boolean;
     isLast: boolean;
     isBackButton: boolean;
+    categories: string[];
+    selectedCategory: string;
     customAttributes: { [key: string]: any };
   };
 }
