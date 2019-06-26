@@ -44,17 +44,12 @@ const WelcomePage = ({ gallery }: IWelcomeProps) => {
         slideStyle={swipableSlideStyle}
         enableMouseEvents={true}
       >
-        {gallery.items.map((item, index) => {
-          if (index === gallery.items.length - 1) {
-            return (
-              <React.Fragment key={item.image}>
-                <Img src={item.image} alt={item.name} isLast={true} />
-                <Button to="/chatbot">Start now</Button>
-              </React.Fragment>
-            );
-          }
-          return <Img key={item.image} src={item.image} alt={item.name} />;
-        })}
+        {gallery.items.map((item, index) => (
+          <React.Fragment key={item.image}>
+            <Img src={item.image} alt={item.name} />
+            <Button to="/chatbot">Start now</Button>
+          </React.Fragment>
+        ))}
       </SwipeableViews>
     </Wrapper>
   ) : null;
@@ -114,7 +109,7 @@ const NavItem = styled.div<INavItem>`
 const Img = styled.img<{ isLast?: boolean }>`
   max-width: 100%;
   max-height: 100%;
-  ${({ isLast }) => isLast && 'max-height: calc(100% - 128px)'}
+  max-height: calc(100% - 128px);
 `;
 
 const Button = styled(Link)`
