@@ -186,7 +186,7 @@ const Rate = styled.div`
 const RateValue = styled.div`
   color: #ffc850;
   margin-left: 10px;
-  font-weight: bold;
+  font-weight: 500;
 `;
 
 const Reviews = styled.div`

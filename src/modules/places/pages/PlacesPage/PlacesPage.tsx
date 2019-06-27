@@ -124,6 +124,7 @@ const Nav = styled.div`
   display: flex;
   margin-bottom: 24px;
   overflow-x: scroll;
+  border-bottom: 1px solid #d7d7da;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
@@ -141,7 +142,7 @@ const NavItem = styled.div<{ isActive: boolean }>`
   font-size: 18px;
   white-space: nowrap;
   ${({ isActive }) =>
-    isActive && 'border-bottom: 2px solid #3A51FE; color: #3A51FE;'}
+    isActive && 'border-bottom: 2px solid #7B7A87; color: #292929;'}
   transition: border-color 300ms;
 `;
 
