@@ -57,7 +57,7 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
             data-index={index}
             onClick={handleNavClick}
           >
-            {CATEGORIES_MAP[category]}
+            {CATEGORIES_MAP[category] ? CATEGORIES_MAP[category] : category}
           </NavItem>
         ))}
       </Nav>
