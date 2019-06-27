@@ -34,5 +34,5 @@ export const CATEGORIES_MAP: { [key: string]: string } = {
   store: 'Store',
   cannabis: 'Cannabis stores',
   convenience_store: 'Convenience stores',
-  park: 'park',
+  park: 'Parks',
 };
