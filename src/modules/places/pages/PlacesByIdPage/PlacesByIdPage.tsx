@@ -107,32 +107,30 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
             {place.details.reviews && <Tab label="Reviews" />}
           </Tabs>
         </TabsWrapper>
-        {state === 0 && (
-          <SwipeableViews
-            index={0}
-            enableMouseEvents={true}
-            containerStyle={containerStyle}
-          >
-            <ScrollWrapper>
-              {(place.details.photos || []).slice(1).map(item => {
-                return (
-                  <ImgWrapper key={item.photo_reference}>
-                    <img
-                      src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
-                      alt={place.name}
-                    />
-                  </ImgWrapper>
-                );
-              })}
-            </ScrollWrapper>
-          </SwipeableViews>
-        )}
-        {state === 1 &&
-          (place.details.reviews || []).map(review => (
-            <React.Fragment key={review.time}>
-              <Review {...review} />
-            </React.Fragment>
-          ))}
+        <SwipeableViews
+          index={state}
+          enableMouseEvents={true}
+          animateHeight={true}
+          containerStyle={containerStyle}
+        >
+          <ScrollWrapper>
+            {(place.details.photos || []).slice(1).map(item => {
+              return (
+                <ImgWrapper key={item.photo_reference}>
+                  <img
+                    src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
+                    alt={place.name}
+                  />
+                </ImgWrapper>
+              );
+            })}
+          </ScrollWrapper>
+          <div>
+            {(place.details.reviews || []).map(review => (
+              <Review key={review.time} {...review} />
+            ))}
+          </div>
+        </SwipeableViews>
       </Content>
     </Place>
   );
@@ -147,6 +145,7 @@ const prepareImageUrl = (photoList: IPlacePhoto[] = []) => {
 
 const containerStyle = {
   width: '100%',
+  marginBottom: '20px',
 };
 
 const Place = styled.div`

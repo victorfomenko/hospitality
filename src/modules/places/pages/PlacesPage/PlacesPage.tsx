@@ -3,6 +3,8 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import PlaceCard from '../../../../components/PlaceCard';
+import Tab from '../../../../components/Tab';
+import Tabs from '../../../../components/Tabs';
 import {
   ACTIVE_CATEGORY_KEY,
   CATEGORIES_KEY,
@@ -20,22 +22,15 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   const [categories] = useStateWithLocalStorage(CATEGORIES_KEY, []);
   const [activeCategory] = useStateWithLocalStorage(ACTIVE_CATEGORY_KEY, []);
   const [chatbot] = useStateWithLocalStorage(CHATBOT_KEY, {});
-  const [state, setState] = React.useState({
-    index: categories.indexOf(activeCategory),
-  });
+  const [state, setState] = React.useState(categories.indexOf(activeCategory));
   const isEmpty = !categories.length && !Object.keys(chatbot).length;
 
   let places: IPlace[] = collection.places;
   if (categories.length !== 0) {
     places = places.filter(item => categories.includes(item.type));
   }
-  const handleNavClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const { index } = e.currentTarget.dataset;
-    setState({ index: Number(index) });
-  };
-
-  const handleChangeIndex = (index: number) => {
-    setState({ index });
+  const handleTabChange = (e: React.ChangeEvent<{}>, index: number) => {
+    setState(index);
   };
 
   return isEmpty ? (
@@ -49,22 +44,20 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   ) : (
     <Wrapper>
       <Title>Recomendation</Title>
-      <Nav>
-        {categories.map((category: string, index: number) => (
-          <NavItem
-            key={category}
-            isActive={state.index === index}
-            data-index={index}
-            onClick={handleNavClick}
-          >
-            {CATEGORIES_MAP[category] ? CATEGORIES_MAP[category] : category}
-          </NavItem>
-        ))}
-      </Nav>
+      <TabsWrapper>
+        <Tabs value={state} onChange={handleTabChange}>
+          {categories.map((category: string) => (
+            <Tab
+              key={category}
+              label={
+                CATEGORIES_MAP[category] ? CATEGORIES_MAP[category] : category
+              }
+            />
+          ))}
+        </Tabs>
+      </TabsWrapper>
       <SwipeableViews
-        index={state.index}
-        onChangeIndex={handleChangeIndex}
-        // style={swipableViewStyle}
+        index={state}
         containerStyle={swipableContainerStyle}
         animateHeight={true}
         enableMouseEvents={true}
@@ -119,31 +112,17 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const Nav = styled.div`
+const TabsWrapper = styled.div`
   width: 100%;
   display: flex;
   margin-bottom: 24px;
+  font-size: 18px;
+  white-space: nowrap;
   overflow-x: scroll;
-  border-bottom: 1px solid #d7d7da;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const NavItem = styled.div<{ isActive: boolean }>`
-  flex-grow: 1;
-  display: flex;
-  cursor: pointer;
-  color: #595959;
-  padding: 12px 22px;
-  text-align: center;
-  justify-content: center;
-  font-size: 18px;
-  white-space: nowrap;
-  ${({ isActive }) =>
-    isActive && 'border-bottom: 2px solid #7B7A87; color: #292929;'}
-  transition: border-color 300ms;
 `;
 
 export default PlacesPage;
