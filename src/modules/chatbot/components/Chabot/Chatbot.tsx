@@ -17,7 +17,8 @@ interface IChatbotProps extends RouteComponentProps {
   startLoading: () => void;
   finishLoading: () => void;
 }
-const CHATBOT_URL = `http://demo-ui.sofiapulse.com/flow/5d13a871692319404d0a990e?postMessageUrl=${
+
+const CHATBOT_URL = `${process.env.REACT_APP_CHATBOT_URL}?postMessageUrl=${
   window.location.origin
 }`;
 
