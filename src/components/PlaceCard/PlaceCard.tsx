@@ -30,7 +30,7 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
   };
 
   return (
-    <Link to={`/places/${place.id}`}>
+    <StyledLink to={`/places/${place.id}`}>
       <Card>
         <PlaceImg bgImg={prepareImageUrl(place.details.photos)} />
         <PlaceDescr>
@@ -55,9 +55,13 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
           </Info>
         </PlaceDescr>
       </Card>
-    </Link>
+    </StyledLink>
   );
 };
+
+const StyledLink = styled(Link)`
+  display: block;
+`;
 
 const Card = styled.div`
   padding: 15px;

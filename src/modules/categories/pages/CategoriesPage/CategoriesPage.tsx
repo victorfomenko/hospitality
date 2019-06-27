@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import Badge from '../../../../components/Badge/Badge';
-import { CATEGORIES_KEY } from '../../../../data/constants';
+import { CATEGORIES_KEY, CATEGORIES_MAP } from '../../../../data/constants';
 import { IPlace } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import withWidth from '../../../../utils/withWidth';
@@ -13,23 +13,6 @@ interface ICategoriesProps {
   places: IPlace[];
   children?: ReactNode;
 }
-
-const categoriesMap: { [key: string]: string } = {
-  bakery: 'Bakery',
-  bar: 'Bar',
-  cafe: 'Cafe',
-  casino: 'Casino',
-  clothing_store: 'Clothes',
-  gym: 'Gym',
-  jewelry_store: 'Jewelry',
-  movie_theater: 'Movie theater',
-  night_club: 'Night club',
-  pharmacy: 'Pharmacy',
-  restaurant: 'Restaurant',
-  shopping_mall: 'Shopping mall',
-  zoo: 'Zoo',
-  yoga: 'Yoga',
-};
 
 const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
   width,
@@ -82,7 +65,7 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
               onClick={handleClickCategory}
               isActive={savedCategories.includes(item)}
             >
-              {categoriesMap[item] ? categoriesMap[item] : item}
+              {CATEGORIES_MAP[item] ? CATEGORIES_MAP[item] : item}
             </Badge>
           ))}
         </Categories>

@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
+import SwipeableViews from 'react-swipeable-views';
 import PlaceCard from '../../../../components/PlaceCard';
-import { CATEGORIES_KEY, CHATBOT_KEY } from '../../../../data/constants';
+import {
+  ACTIVE_CATEGORY_KEY,
+  CATEGORIES_KEY,
+  CATEGORIES_MAP,
+  CHATBOT_KEY,
+} from '../../../../data/constants';
 import { IPlace, IPlaceCollection } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 
@@ -12,13 +18,26 @@ interface IPlacePageProps {
 
 const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   const [categories] = useStateWithLocalStorage(CATEGORIES_KEY, []);
+  const [activeCategory] = useStateWithLocalStorage(ACTIVE_CATEGORY_KEY, []);
   const [chatbot] = useStateWithLocalStorage(CHATBOT_KEY, {});
+  const [state, setState] = React.useState({
+    index: categories.indexOf(activeCategory),
+  });
   const isEmpty = !categories.length && !Object.keys(chatbot).length;
 
   let places: IPlace[] = collection.places;
   if (categories.length !== 0) {
     places = places.filter(item => categories.includes(item.type));
   }
+  const handleNavClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const { index } = e.currentTarget.dataset;
+    setState({ index: Number(index) });
+  };
+
+  const handleChangeIndex = (index: number) => {
+    setState({ index });
+  };
+
   return isEmpty ? (
     <Empty>
       <div>
@@ -30,11 +49,42 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   ) : (
     <Wrapper>
       <Title>Recomendation</Title>
-      {places.map(place => (
-        <PlaceCard key={place.id} place={place} />
-      ))}
+      <Nav>
+        {categories.map((category: string, index: number) => (
+          <NavItem
+            key={category}
+            isActive={state.index === index}
+            data-index={index}
+            onClick={handleNavClick}
+          >
+            {CATEGORIES_MAP[category]}
+          </NavItem>
+        ))}
+      </Nav>
+      <SwipeableViews
+        index={state.index}
+        onChangeIndex={handleChangeIndex}
+        // style={swipableViewStyle}
+        containerStyle={swipableContainerStyle}
+        animateHeight={true}
+        enableMouseEvents={true}
+      >
+        {categories.map((category: string) => (
+          <div key={category}>
+            {places
+              .filter(item => item.type === category)
+              .map(place => (
+                <PlaceCard key={place.id} place={place} />
+              ))}
+          </div>
+        ))}
+      </SwipeableViews>
     </Wrapper>
   );
+};
+
+const swipableContainerStyle: React.CSSProperties = {
+  marginBottom: '20px',
 };
 
 const Empty = styled.div`
@@ -67,6 +117,27 @@ const Title = styled.h1`
   margin: 0 auto;
   overflow: hidden;
   text-align: center;
+`;
+
+const Nav = styled.div`
+  width: 100%;
+  display: flex;
+  margin-bottom: 24px;
+  overflow: auto;
+`;
+
+const NavItem = styled.div<{ isActive: boolean }>`
+  flex-grow: 1;
+  display: flex;
+  cursor: pointer;
+  color: #595959;
+  padding: 16px 32px;
+  text-align: center;
+  justify-content: center;
+  font-size: 20px;
+  ${({ isActive }) =>
+    isActive && 'border-bottom: 2px solid #3A51FE; color: #3A51FE;'}
+  transition: border-color 300ms;
 `;
 
 export default PlacesPage;
