@@ -30,4 +30,8 @@ export const CATEGORIES_MAP: { [key: string]: string } = {
   spa: 'Spa',
   library: 'Library',
   art_gallery: 'Art galleries',
+  quick_bites: 'Quick bites',
+  store: 'Store',
+  cannabis: 'Cannabis stores',
+  convenience_store: 'Convenience stores',
 };
