@@ -123,7 +123,11 @@ const Nav = styled.div`
   width: 100%;
   display: flex;
   margin-bottom: 24px;
-  overflow: auto;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NavItem = styled.div<{ isActive: boolean }>`
@@ -131,10 +135,11 @@ const NavItem = styled.div<{ isActive: boolean }>`
   display: flex;
   cursor: pointer;
   color: #595959;
-  padding: 16px 32px;
+  padding: 12px 22px;
   text-align: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
+  white-space: nowrap;
   ${({ isActive }) =>
     isActive && 'border-bottom: 2px solid #3A51FE; color: #3A51FE;'}
   transition: border-color 300ms;
