@@ -3,6 +3,7 @@ import qs from 'qs';
 import { createAction, createReducer } from 'redux-act';
 import { createSelector } from 'reselect';
 import {
+  ACTIVE_CATEGORY_KEY,
   CATEGORIES_KEY,
   CHATBOT_KEY,
   PLACE_COLLECTION_KEY,
@@ -29,6 +30,7 @@ const getCollectionId = () => {
     storage.removeItem(CATEGORIES_KEY);
     storage.removeItem(PROFILES_KEY);
     storage.removeItem(SAVED_PLACES_KEY);
+    storage.removeItem(ACTIVE_CATEGORY_KEY);
     window.location.search = `${qs.stringify(queryParams, {
       addQueryPrefix: Object.keys(queryParams).length ? true : false,
     })}`;

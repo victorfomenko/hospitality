@@ -20,9 +20,15 @@ interface IPlacePageProps {
 
 const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   const [categories] = useStateWithLocalStorage(CATEGORIES_KEY, []);
-  const [activeCategory] = useStateWithLocalStorage(ACTIVE_CATEGORY_KEY, []);
+  const [activeCategory, setActiveCategory] = useStateWithLocalStorage(
+    ACTIVE_CATEGORY_KEY,
+  );
   const [chatbot] = useStateWithLocalStorage(CHATBOT_KEY, {});
-  const [state, setState] = React.useState(categories.indexOf(activeCategory));
+  const [state, setState] = React.useState(
+    categories.indexOf(activeCategory) !== -1
+      ? categories.indexOf(activeCategory)
+      : 0,
+  );
   const isEmpty = !categories.length && !Object.keys(chatbot).length;
 
   let places: IPlace[] = collection.places;
@@ -31,6 +37,7 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   }
   const handleTabChange = (e: React.ChangeEvent<{}>, index: number) => {
     setState(index);
+    setActiveCategory(null);
   };
 
   return isEmpty ? (
