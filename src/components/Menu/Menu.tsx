@@ -23,18 +23,23 @@ const Menu: FC<{}> = () => (
     </svg>
     <NavItem to="/welcome">
       <InfoIcon />
+      <NavTitle>Info</NavTitle>
     </NavItem>
     <NavItem to="/chatbot">
       <ProfileIcon />
+      <NavTitle>Chatbot</NavTitle>
     </NavItem>
     <NavItem to="/categories">
       <MoodIcon />
+      <NavTitle>Mood</NavTitle>
     </NavItem>
     <NavItem to="/places">
       <ListIcon />
+      <NavTitle>Places</NavTitle>
     </NavItem>
     <NavItem to="/saved">
       <StarIcon />
+      <NavTitle>Wishlist</NavTitle>
     </NavItem>
   </Nav>
 );
@@ -57,6 +62,7 @@ const NavItem = styled(NavLink)<NavLinkProps>`
   justify-content: center;
   cursor: pointer;
   border-right: 1px solid #eaeaea;
+  flex-direction: column;
   &.active {
     svg {
       fill: url(#icon-gradient) #6093f8;
@@ -71,6 +77,12 @@ const NavItem = styled(NavLink)<NavLinkProps>`
   &:last-child {
     border-right: none;
   }
+`;
+
+const NavTitle = styled.div`
+  font-size: 14px;
+  margin-top: 6px;
+  text-align: center;
 `;
 
 export default Menu;
