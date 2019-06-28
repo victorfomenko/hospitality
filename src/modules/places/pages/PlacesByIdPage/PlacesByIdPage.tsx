@@ -90,13 +90,6 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
             {(place.details.reviews || []).length} Google reviews
           </Reviews>
         </RankingContainer>
-        <div>
-          {`${
-            place.name
-          } is a fine-dining restaurant in Melbourne, Australia, owned and operated by Ben Shewry.
-          It has won several awards in Australia, and has been included in The World's 50 Best Restaurants since 2010.
-          Its current position on the list places it as the top restaurant in Australia.`}
-        </div>
         <PlaceAdress>
           <StyledAdressIcon />
           {place.details.formatted_address}
