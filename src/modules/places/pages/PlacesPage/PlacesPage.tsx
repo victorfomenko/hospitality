@@ -40,6 +40,10 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
     setActiveCategory(null);
   };
 
+  const handleChangeIndex = (index: number) => {
+    setState(index);
+  };
+
   return isEmpty ? (
     <Empty>
       <div>
@@ -50,7 +54,7 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
     </Empty>
   ) : (
     <Wrapper>
-      <Title>Recomendation</Title>
+      <Title>Our Top Picks</Title>
       <TabsWrapper>
         <Tabs value={state} onChange={handleTabChange}>
           {categories.map((category: string) => (
@@ -68,6 +72,7 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
         containerStyle={swipableContainerStyle}
         animateHeight={true}
         enableMouseEvents={true}
+        onChangeIndex={handleChangeIndex}
       >
         {categories.map((category: string) => (
           <div key={category}>
@@ -79,9 +84,6 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
           </div>
         ))}
       </SwipeableViews>
-      <ButtonWrapper>
-        <Button to="/categories">Go back</Button>
-      </ButtonWrapper>
     </Wrapper>
   );
 };
@@ -133,24 +135,6 @@ const TabsWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-  margin-bottom: 35px;
-`;
-
-const Button = styled(Link)`
-  font-size: 18px;
-  font-weight: 500;
-  background-color: #fff;
-  padding: 14px 24px;
-  cursor: pointer;
-  align-items: center;
-  color: #1f437f !important;
-  border-radius: 24px;
 `;
 
 export default PlacesPage;

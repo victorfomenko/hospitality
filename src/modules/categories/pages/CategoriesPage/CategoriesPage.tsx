@@ -116,7 +116,7 @@ const Title = styled.h1`
   text-align: center;
   line-height: 1.35417em;
   font-weight: 400;
-  margin: 20px 0;
+  margin: 10px 0 20px 0;
 `;
 
 const Divider = styled.div`
@@ -139,7 +139,7 @@ const CategoriesWrapper = styled.div`
 const Categories = styled.div`
   grid-template-columns: auto auto;
   display: grid;
-  grid-row-gap: 25px;
+  grid-row-gap: 15px;
   justify-content: space-between;
 `;
 

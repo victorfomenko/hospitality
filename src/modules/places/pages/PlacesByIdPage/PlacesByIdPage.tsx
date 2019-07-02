@@ -52,6 +52,10 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
     setState(index);
   };
 
+  const handleChangeIndex = (index: number) => {
+    setState(index);
+  };
+
   const handleSavePlace = () => {
     if (indexOfSavedPlace !== -1) {
       setPlacesById({
@@ -105,6 +109,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
           enableMouseEvents={true}
           animateHeight={true}
           containerStyle={containerStyle}
+          onChangeIndex={handleChangeIndex}
         >
           <ScrollWrapper>
             {(place.details.photos || []).slice(1).map(item => {
