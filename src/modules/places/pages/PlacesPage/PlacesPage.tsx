@@ -54,36 +54,40 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
     </Empty>
   ) : (
     <Wrapper>
-      <Title>Our Top Picks</Title>
-      <TabsWrapper>
-        <Tabs value={state} onChange={handleTabChange}>
+      <Header>
+        <Title>Our Top Picks</Title>
+        <TabsWrapper>
+          <Tabs value={state} onChange={handleTabChange}>
+            {categories.map((category: string) => (
+              <Tab
+                key={category}
+                label={
+                  CATEGORIES_MAP[category] ? CATEGORIES_MAP[category] : category
+                }
+              />
+            ))}
+          </Tabs>
+        </TabsWrapper>
+      </Header>
+      <Content>
+        <SwipeableViews
+          index={state}
+          containerStyle={swipableContainerStyle}
+          animateHeight={true}
+          enableMouseEvents={true}
+          onChangeIndex={handleChangeIndex}
+        >
           {categories.map((category: string) => (
-            <Tab
-              key={category}
-              label={
-                CATEGORIES_MAP[category] ? CATEGORIES_MAP[category] : category
-              }
-            />
+            <div key={category}>
+              {places
+                .filter(item => item.type === category)
+                .map(place => (
+                  <PlaceCard key={place.id} place={place} />
+                ))}
+            </div>
           ))}
-        </Tabs>
-      </TabsWrapper>
-      <SwipeableViews
-        index={state}
-        containerStyle={swipableContainerStyle}
-        animateHeight={true}
-        enableMouseEvents={true}
-        onChangeIndex={handleChangeIndex}
-      >
-        {categories.map((category: string) => (
-          <div key={category}>
-            {places
-              .filter(item => item.type === category)
-              .map(place => (
-                <PlaceCard key={place.id} place={place} />
-              ))}
-          </div>
-        ))}
-      </SwipeableViews>
+        </SwipeableViews>
+      </Content>
     </Wrapper>
   );
 };
@@ -104,10 +108,32 @@ const Empty = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding: 35px 20px 0px 20px;
-  height: 100%;
-  overflow: auto;
   background-color: #eeeeee;
+  min-height: 100%;
+  display: flex;
+  max-height: 100%;
+  flex-direction: column;
+  overflow: auto;
+`;
+
+const Header = styled.div`
+  padding-top: 35px;
+  background-color: #eeeeee;
+  position: fixed;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  z-index: 1;
+  display: flex;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  flex-direction: column;
+`;
+
+const Content = styled.div`
+  flex: 1;
+  flex-grow: 1;
+  padding: 166px 20px 0 20px;
 `;
 
 const Title = styled.h1`
@@ -127,7 +153,6 @@ const Title = styled.h1`
 const TabsWrapper = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 24px;
   font-size: 18px;
   white-space: nowrap;
   overflow-x: scroll;
