@@ -24,7 +24,7 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
   );
   const categories = places.map(item => item.type);
   const categoryStyle = {
-    width: `${width / 2.5}px`,
+    width: `${width / 2.4}px`,
   };
 
   const handleClickCategory = (
@@ -45,7 +45,7 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
   return categories.length === 0 ? (
     <Empty>
       <div>
-        Please tals with our <Link to="/chatbot">assistant</Link> to configure
+        Please talk with our <Link to="/chatbot">assistant</Link> to configure
         categories
       </div>
     </Empty>
@@ -116,7 +116,7 @@ const Title = styled.h1`
   text-align: center;
   line-height: 1.35417em;
   font-weight: 400;
-  margin: 35px 0;
+  margin: 20px 0;
 `;
 
 const Divider = styled.div`

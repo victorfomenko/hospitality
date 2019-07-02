@@ -35,15 +35,15 @@ const Badge: FunctionComponent<IBadge> = ({
 };
 
 const StyledBadge = styled.div<ICategory>`
-  height: 48px;
-  padding: 12px 24px;
+  height: 42px;
+  padding: 8px 18px;
   background-color: #ffffff;
   border-radius: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #1f437f;
-  font-size: 18px;
+  font-size: 16px;
   box-shadow: 5px 5px 15px rgb(133, 145, 176, 0.5);
   ${({ isActive }) =>
     isActive && `background-color: #1F437F; box-shadow: none; color: white;`}
@@ -52,14 +52,16 @@ const StyledBadge = styled.div<ICategory>`
 `;
 
 const StyledCheckIcon = styled(CheckIcon)`
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
   background-image: url('./img/check.svg');
 `;
 
 const StyledAddIcon = styled(AddIcon)`
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
   background-image: url('./img/add.svg');
 `;
 
