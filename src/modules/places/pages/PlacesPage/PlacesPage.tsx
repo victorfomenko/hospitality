@@ -117,7 +117,7 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  padding-top: 35px;
+  padding-top: 25px;
   background-color: #eeeeee;
   position: fixed;
   top: 0;
@@ -133,14 +133,14 @@ const Header = styled.div`
 const Content = styled.div`
   flex: 1;
   flex-grow: 1;
-  padding: 166px 20px 0 20px;
+  padding: 146px 20px 0 20px;
 `;
 
 const Title = styled.h1`
   color: #1f437f;
   font-size: 1.6rem;
   align-self: center;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   max-width: 70%;
   text-align: center;
   line-height: 1.35417em;
