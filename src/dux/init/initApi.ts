@@ -21,7 +21,7 @@ export interface IPlace {
   hidden: boolean;
   googlePlaceId: string;
   profile: string[];
-  details: {
+  details?: {
     id: string;
     name: string;
     icon: string;

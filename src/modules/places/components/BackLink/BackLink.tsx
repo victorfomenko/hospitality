@@ -3,9 +3,22 @@ import React, { FunctionComponent } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { ReactComponent as BackIcon } from './img/arrowBack.svg';
 
-const BackLink: FunctionComponent<RouteComponentProps> = props => {
+interface IProps extends RouteComponentProps {
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  className?: string;
+}
+
+const BackLink: FunctionComponent<IProps> = props => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (props.onClick) {
+      props.onClick(e);
+    } else {
+      props.history.goBack();
+    }
+  };
+
   return (
-    <NavLink onClick={props.history.goBack} {...props}>
+    <NavLink onClick={handleClick} {...props}>
       <BackIcon />
     </NavLink>
   );

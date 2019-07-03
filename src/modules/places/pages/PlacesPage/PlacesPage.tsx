@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import PlaceCard from '../../../../components/PlaceCard';
 import Tab from '../../../../components/Tab';
@@ -15,11 +15,14 @@ import { IPlace, IPlaceCollection } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import BackLink from '../../components/BackLink';
 
-interface IPlacePageProps {
+interface IPlacePageProps extends RouteComponentProps {
   collection: IPlaceCollection;
 }
 
-const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
+const PlacesPage: FunctionComponent<IPlacePageProps> = ({
+  collection,
+  history,
+}) => {
   const [categories] = useStateWithLocalStorage(CATEGORIES_KEY, []);
   const [activeCategory, setActiveCategory] = useStateWithLocalStorage(
     ACTIVE_CATEGORY_KEY,
@@ -45,6 +48,10 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
     setState(index);
   };
 
+  const handleClickBack = () => {
+    history.push('/categories');
+  };
+
   return isEmpty ? (
     <Empty>
       <div>
@@ -56,7 +63,7 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   ) : (
     <Wrapper>
       <Header>
-        <StyledBackLink />
+        <StyledBackLink onClick={handleClickBack} />
         <Title>Our Top Picks</Title>
         <TabsWrapper>
           <Tabs value={state} onChange={handleTabChange}>
@@ -173,4 +180,4 @@ const TabsWrapper = styled.div`
   }
 `;
 
-export default PlacesPage;
+export default withRouter(PlacesPage);

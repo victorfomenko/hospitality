@@ -46,7 +46,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   if (!place) {
     return <NotFoundPage />;
   }
-  const imgUrl = prepareImageUrl(place.details.photos);
+  const imgUrl = prepareImageUrl(place.details && place.details.photos);
 
   const handleTabChange = (e: React.ChangeEvent<{}>, index: number) => {
     setState(index);
@@ -85,50 +85,54 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
         )}
 
         <PlaceName>{place.name}</PlaceName>
-        <RankingContainer>
-          <Rate>
-            <Rating placeholderRating={place.details.rating} />
-            <RateValue>{place.details.rating}</RateValue>
-          </Rate>
-          <Reviews>
-            {(place.details.reviews || []).length} Google reviews
-          </Reviews>
-        </RankingContainer>
-        <PlaceAdress>
-          <StyledAdressIcon />
-          {place.details.formatted_address}
-        </PlaceAdress>
-        <TabsWrapper>
-          <Tabs value={state} onChange={handleTabChange}>
-            {place.details.photos && <Tab label="Gallery" />}
-            {place.details.reviews && <Tab label="Reviews" />}
-          </Tabs>
-        </TabsWrapper>
-        <SwipeableViews
-          index={state}
-          enableMouseEvents={true}
-          animateHeight={true}
-          containerStyle={containerStyle}
-          onChangeIndex={handleChangeIndex}
-        >
-          <ScrollWrapper>
-            {(place.details.photos || []).slice(1).map(item => {
-              return (
-                <ImgWrapper key={item.photo_reference}>
-                  <img
-                    src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
-                    alt={place.name}
-                  />
-                </ImgWrapper>
-              );
-            })}
-          </ScrollWrapper>
-          <div>
-            {(place.details.reviews || []).map(review => (
-              <Review key={review.time} {...review} />
-            ))}
-          </div>
-        </SwipeableViews>
+        {place.details && (
+          <>
+            <RankingContainer>
+              <Rate>
+                <Rating placeholderRating={place.details.rating} />
+                <RateValue>{place.details.rating}</RateValue>
+              </Rate>
+              <Reviews>
+                {(place.details.reviews || []).length} Google reviews
+              </Reviews>
+            </RankingContainer>
+            <PlaceAdress>
+              <StyledAdressIcon />
+              {place.details.formatted_address}
+            </PlaceAdress>
+            <TabsWrapper>
+              <Tabs value={state} onChange={handleTabChange}>
+                {place.details.photos && <Tab label="Gallery" />}
+                {place.details.reviews && <Tab label="Reviews" />}
+              </Tabs>
+            </TabsWrapper>
+            <SwipeableViews
+              index={state}
+              enableMouseEvents={true}
+              animateHeight={true}
+              containerStyle={containerStyle}
+              onChangeIndex={handleChangeIndex}
+            >
+              <ScrollWrapper>
+                {(place.details.photos || []).slice(1).map(item => {
+                  return (
+                    <ImgWrapper key={item.photo_reference}>
+                      <img
+                        src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
+                        alt={place.name}
+                      />
+                    </ImgWrapper>
+                  );
+                })}
+              </ScrollWrapper>
+              <div>
+                {(place.details.reviews || []).map(review => (
+                  <Review key={review.time} {...review} />
+                ))}
+              </div>
+            </SwipeableViews>
+          </>
+        )}
       </Content>
     </Place>
   );

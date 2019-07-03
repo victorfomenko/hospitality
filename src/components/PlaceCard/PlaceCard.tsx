@@ -32,27 +32,31 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
   return (
     <StyledLink to={`/places/${place.id}`}>
       <Card>
-        <PlaceImg bgImg={prepareImageUrl(place.details.photos)} />
+        <PlaceImg
+          bgImg={prepareImageUrl(place.details ? place.details.photos : [])}
+        />
         <PlaceDescr>
           <PlaceName>{place.name}</PlaceName>
-          <Info>
-            <Location>
-              <StyledLocationIcon />
-              <Adress>{place.details.formatted_address}</Adress>
-            </Location>
-            <Right>
-              <Rate>
-                <StyledStarIcon />
-                <RateCount>{place.details.rating}</RateCount>
-              </Rate>
-              <Reviews>
-                <StyledCommentIcon />
-                <ReviewCount>
-                  {(place.details.reviews || []).length}
-                </ReviewCount>
-              </Reviews>
-            </Right>
-          </Info>
+          {place.details && (
+            <Info>
+              <Location>
+                <StyledLocationIcon />
+                <Adress>{place.details.formatted_address}</Adress>
+              </Location>
+              <Right>
+                <Rate>
+                  <StyledStarIcon />
+                  <RateCount>{place.details.rating}</RateCount>
+                </Rate>
+                <Reviews>
+                  <StyledCommentIcon />
+                  <ReviewCount>
+                    {(place.details.reviews || []).length}
+                  </ReviewCount>
+                </Reviews>
+              </Right>
+            </Info>
+          )}
         </PlaceDescr>
       </Card>
     </StyledLink>
