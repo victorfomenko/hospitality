@@ -13,6 +13,7 @@ import {
 } from '../../../../data/constants';
 import { IPlace, IPlaceCollection } from '../../../../dux/init/initApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
+import BackLink from '../../components/BackLink';
 
 interface IPlacePageProps {
   collection: IPlaceCollection;
@@ -55,6 +56,7 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({ collection }) => {
   ) : (
     <Wrapper>
       <Header>
+        <StyledBackLink />
         <Title>Our Top Picks</Title>
         <TabsWrapper>
           <Tabs value={state} onChange={handleTabChange}>
@@ -148,6 +150,15 @@ const Title = styled.h1`
   margin: 0 auto;
   overflow: hidden;
   text-align: center;
+`;
+
+const StyledBackLink = styled(BackLink)`
+  top: 24px;
+  background: none;
+  border-color: #b7b7b7;
+  svg {
+    fill: #b7b7b7;
+  }
 `;
 
 const TabsWrapper = styled.div`
