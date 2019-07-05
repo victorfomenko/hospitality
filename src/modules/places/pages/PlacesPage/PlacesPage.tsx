@@ -163,7 +163,11 @@ const StyledBackLink = styled(BackLink)`
   top: 24px;
   background: none;
   border-color: #b7b7b7;
+  width: 32px;
+  height: 32px;
   svg {
+    width: 24px;
+    height: 24px;
     fill: #b7b7b7;
   }
 `;
