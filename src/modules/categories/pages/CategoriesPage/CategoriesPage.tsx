@@ -91,7 +91,7 @@ const Empty = styled.div`
 `;
 
 const Wrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 80px);
   padding: 35px 20px 0px 20px;
   background-color: #5fe9f8;
   background-image: linear-gradient(
@@ -144,20 +144,26 @@ const Categories = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
+  background-color: white;
+  position: fixed;
+  bottom: 100px;
+  left: 0;
+  width: 100%;
+  bottom: 80px;
+  text-align: center;
+  height: 80px;
 `;
 
 const Button = styled(Link)`
   font-size: 18px;
   font-weight: 500;
-  background-color: #fff;
+  background: linear-gradient(to right, #15b0e9, #99d8bc);
   padding: 14px 24px;
   cursor: pointer;
-  align-items: center;
-  color: #1f437f !important;
+  display: inline-block;
+  color: white !important;
   border-radius: 24px;
+  margin-top: 15px;
 `;
 
 export default withWidth(CategoriesPage);

@@ -66,7 +66,7 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({
         <StyledBackLink onClick={handleClickBack} />
         <Title>Our Top Picks</Title>
         <TabsWrapper>
-          <Tabs value={state} onChange={handleTabChange}>
+          <Tabs value={state} onChange={handleTabChange} scrollable={true}>
             {categories.map((category: string) => (
               <Tab
                 key={category}
@@ -176,12 +176,8 @@ const TabsWrapper = styled.div`
   width: 100%;
   display: flex;
   font-size: 18px;
-  white-space: nowrap;
-  overflow-x: scroll;
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  flex-shrink: 0;
+  flex-direction: column;
 `;
 
 export default withRouter(PlacesPage);
