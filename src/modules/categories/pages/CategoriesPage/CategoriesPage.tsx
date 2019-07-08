@@ -50,7 +50,7 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
       </div>
     </Empty>
   ) : (
-    <Wrapper>
+    <Wrapper fullHeight={savedCategories.length === 0}>
       <Title>
         What are you in the mood for?
         <Divider />
@@ -71,9 +71,7 @@ const CategoriesPage: FunctionComponent<ICategoriesProps> = ({
         </Categories>
       </CategoriesWrapper>
       {savedCategories.length > 0 && (
-        <ButtonWrapper>
-          <Button to="/places">Recomendations</Button>
-        </ButtonWrapper>
+        <Button to="/places">Tap here to see list</Button>
       )}
     </Wrapper>
   );
@@ -90,8 +88,8 @@ const Empty = styled.div`
   }
 `;
 
-const Wrapper = styled.div`
-  height: calc(100% - 80px);
+const Wrapper = styled.div<{ fullHeight: boolean }>`
+  height: ${({ fullHeight }) => (fullHeight ? '100%' : 'calc(100% - 50px)')};
   padding: 35px 20px 0px 20px;
   background-color: #5fe9f8;
   background-image: linear-gradient(
@@ -143,27 +141,22 @@ const Categories = styled.div`
   justify-content: space-between;
 `;
 
-const ButtonWrapper = styled.div`
-  background-color: white;
+const Button = styled(Link)`
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   bottom: 100px;
   left: 0;
   width: 100%;
   bottom: 80px;
   text-align: center;
-  height: 80px;
-`;
-
-const Button = styled(Link)`
-  font-size: 18px;
+  height: 50px;
+  font-size: 15px;
   font-weight: 500;
-  background: linear-gradient(to right, #15b0e9, #99d8bc);
-  padding: 14px 24px;
+  background-color: #ff4081;
   cursor: pointer;
-  display: inline-block;
   color: white !important;
-  border-radius: 24px;
-  margin-top: 15px;
 `;
 
 export default withWidth(CategoriesPage);
