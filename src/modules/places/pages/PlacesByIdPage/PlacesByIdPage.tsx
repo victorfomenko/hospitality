@@ -3,6 +3,7 @@ import storage from 'local-storage-fallback';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import SwipeableViews from 'react-swipeable-views';
+import Img from '../../../../components/Img';
 import Tab from '../../../../components/Tab';
 import Tabs from '../../../../components/Tabs';
 import {
@@ -117,7 +118,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
                 {(place.details.photos || []).slice(1).map(item => {
                   return (
                     <ImgWrapper key={item.photo_reference}>
-                      <img
+                      <Img
                         src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
                         alt={place.name}
                       />
