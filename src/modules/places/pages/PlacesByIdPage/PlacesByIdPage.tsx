@@ -18,15 +18,12 @@ import NotFoundPage from '../../../notFound';
 import ActionButton from '../../components/ActionButton';
 import AdressIcon from '../../components/AdressIcon';
 import BackLink from '../../components/BackLink';
+import PlacePhoto from '../../components/PlacePhoto';
 import Rating from '../../components/Rating';
 import Review from '../../components/Review';
 
 interface IPlacesByIdPageProps extends RouteComponentProps<{ id: string }> {
   collection: IPlaceCollection;
-}
-
-interface IPlaceWrapper {
-  bgImg: string;
 }
 
 const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
@@ -76,7 +73,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
 
   return (
     <Place>
-      <PlacePhoto bgImg={imgUrl} />
+      <PlacePhoto src={imgUrl} />
       <Content>
         <BackLink />
         {indexOfSavedPlace === -1 ? (
@@ -154,14 +151,6 @@ const containerStyle = {
 const Place = styled.div`
   width: 100%;
   height: 100%;
-`;
-
-const PlacePhoto = styled.div<IPlaceWrapper>`
-  height: 40%;
-  background-image: ${({ bgImg }) => `url(${bgImg})`};
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 `;
 
 const Content = styled.div`
