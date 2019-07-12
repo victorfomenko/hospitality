@@ -3,6 +3,7 @@ import storage from 'local-storage-fallback';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import SwipeableViews from 'react-swipeable-views';
+import Img from '../../../../components/Img';
 import Tab from '../../../../components/Tab';
 import Tabs from '../../../../components/Tabs';
 import {
@@ -17,15 +18,12 @@ import NotFoundPage from '../../../notFound';
 import ActionButton from '../../components/ActionButton';
 import AdressIcon from '../../components/AdressIcon';
 import BackLink from '../../components/BackLink';
+import PlacePhoto from '../../components/PlacePhoto';
 import Rating from '../../components/Rating';
 import Review from '../../components/Review';
 
 interface IPlacesByIdPageProps extends RouteComponentProps<{ id: string }> {
   collection: IPlaceCollection;
-}
-
-interface IPlaceWrapper {
-  bgImg: string;
 }
 
 const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
@@ -75,7 +73,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
 
   return (
     <Place>
-      <PlacePhoto bgImg={imgUrl} />
+      <PlacePhoto src={imgUrl} />
       <Content>
         <BackLink />
         {indexOfSavedPlace === -1 ? (
@@ -117,7 +115,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
                 {(place.details.photos || []).slice(1).map(item => {
                   return (
                     <ImgWrapper key={item.photo_reference}>
-                      <img
+                      <Img
                         src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
                         alt={place.name}
                       />
@@ -153,14 +151,6 @@ const containerStyle = {
 const Place = styled.div`
   width: 100%;
   height: 100%;
-`;
-
-const PlacePhoto = styled.div<IPlaceWrapper>`
-  height: 40%;
-  background-image: ${({ bgImg }) => `url(${bgImg})`};
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 `;
 
 const Content = styled.div`
