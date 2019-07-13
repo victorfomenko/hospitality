@@ -13,10 +13,12 @@ const Img = ({ alt, src, ...other }: IImgProps): JSX.Element => {
 
   return (
     <StyledImg
-      error={error}
+      error={true}
+      // error={error}
       onError={handleImageError}
       alt={alt}
-      src={error ? noImageSrc : src}
+      // src={error ? noImageSrc : src}
+      src={noImageSrc}
       {...other}
     />
   );

@@ -23,10 +23,10 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
   place,
 }: IPlaceCard): JSX.Element => {
   const prepareImageUrl = (photoList: IPlacePhoto[] = []) => {
-    if (!photoList.length) {
-      return NO_PHOTO_URL;
-    }
-    return `${GOOGLE_PHOTO_API}/${photoList[0].photo_reference}`;
+    // if (!photoList.length) {
+    return NO_PHOTO_URL;
+    // }
+    // return `${GOOGLE_PHOTO_API}/${photoList[0].photo_reference}`;
   };
 
   return (

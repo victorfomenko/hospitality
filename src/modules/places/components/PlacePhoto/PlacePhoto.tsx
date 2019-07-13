@@ -9,7 +9,7 @@ const PlacePhoto = ({ src, ...other }: IPlacePhotoProps): JSX.Element => {
     setErrorState(true);
   };
 
-  return error ? (
+  return true ? (
     <ErrorBlock>
       <img src={noImageSrc} alt="noImage" />
     </ErrorBlock>
