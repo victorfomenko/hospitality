@@ -100,8 +100,8 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
             </PlaceAdress>
             <TabsWrapper>
               <Tabs value={state} onChange={handleTabChange}>
-                {place.details.photos && <Tab label="Gallery" />}
                 {place.details.reviews && <Tab label="Reviews" />}
+                {place.details.photos && <Tab label="Gallery" />}
               </Tabs>
             </TabsWrapper>
             <SwipeableViews
@@ -111,6 +111,11 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
               containerStyle={containerStyle}
               onChangeIndex={handleChangeIndex}
             >
+              <div>
+                {(place.details.reviews || []).map(review => (
+                  <Review key={review.time} {...review} />
+                ))}
+              </div>
               <ScrollWrapper>
                 {(place.details.photos || []).slice(1).map(item => {
                   return (
@@ -123,11 +128,6 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
                   );
                 })}
               </ScrollWrapper>
-              <div>
-                {(place.details.reviews || []).map(review => (
-                  <Review key={review.time} {...review} />
-                ))}
-              </div>
             </SwipeableViews>
           </>
         )}

@@ -13,6 +13,7 @@ proxy.js
 /build
 
 # misc
+.vscode
 .DS_Store
 .env.local
 .env.development.local

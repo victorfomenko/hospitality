@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import gallery from '../../data/providers/gallery';
 import placeCollection from '../../data/providers/placecollection';
 
@@ -98,8 +98,12 @@ export const getGalleryById = async (id: string): Promise<IGalleryRes> => {
 
 export const getPlaceCollectionById = async (
   id: string,
+  params?: AxiosRequestConfig,
 ): Promise<IPlaceCollectionRes> => {
-  const { data, statusText }: AxiosResponse = await placeCollection.get(id);
+  const { data, statusText }: AxiosResponse = await placeCollection.get(
+    id,
+    params,
+  );
   if (statusText !== 'OK') {
     throw new Error(statusText);
   }

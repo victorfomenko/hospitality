@@ -5,5 +5,13 @@
     { "language": "typescript", "autoFix": true },
     { "language": "typescriptreact", "autoFix": true }
   ],
-  "jira-plugin.workingProject": "SOF"
+  "jira-plugin.workingProject": "",
+  "atlascode.jira.workingSite": {
+    "baseUrlSuffix": "atlassian.net"
+  },
+  "atlascode.jira.workingProject": {
+    "id": "10000",
+    "name": "SofiaPulse",
+    "key": "SOF"
+  }
 }

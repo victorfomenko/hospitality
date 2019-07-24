@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import noImageSrc from './img/noImage.png';
+import noImageSrc from '../../../../static/img/noImage.png';
 interface IPlacePhotoProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
 
 const PlacePhoto = ({ src, ...other }: IPlacePhotoProps): JSX.Element => {
@@ -9,7 +9,7 @@ const PlacePhoto = ({ src, ...other }: IPlacePhotoProps): JSX.Element => {
     setErrorState(true);
   };
 
-  return true ? (
+  return error || src === noImageSrc ? (
     <ErrorBlock>
       <img src={noImageSrc} alt="noImage" />
     </ErrorBlock>

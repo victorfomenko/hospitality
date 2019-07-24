@@ -17,23 +17,28 @@ interface IPlaceCard
 
 interface IPlaceImg {
   bgImg: string;
+  isEmpty: boolean;
 }
 
 const PlaceCard: FunctionComponent<IPlaceCard> = ({
   place,
 }: IPlaceCard): JSX.Element => {
+  const placePhotos = place.details ? place.details.photos || [] : [];
+  const isPhotosExists = placePhotos.length > 0;
+
   const prepareImageUrl = (photoList: IPlacePhoto[] = []) => {
-    // if (!photoList.length) {
-    return NO_PHOTO_URL;
-    // }
-    // return `${GOOGLE_PHOTO_API}/${photoList[0].photo_reference}`;
+    if (!isPhotosExists) {
+      return NO_PHOTO_URL;
+    }
+    return `${GOOGLE_PHOTO_API}/${photoList[0].photo_reference}`;
   };
 
   return (
     <StyledLink to={`/places/${place.id}`}>
       <Card>
         <PlaceImg
-          bgImg={prepareImageUrl(place.details ? place.details.photos : [])}
+          isEmpty={!isPhotosExists}
+          bgImg={prepareImageUrl(placePhotos)}
         />
         <PlaceDescr>
           <PlaceName>{place.name}</PlaceName>
@@ -84,7 +89,10 @@ const PlaceImg = styled.div<IPlaceImg>`
   margin-right: 20px;
   border-radius: 10px;
   background-size: cover;
-  ${({ bgImg }) => `background-image: url(${bgImg})`}
+  ${({ bgImg, isEmpty }) =>
+    isEmpty
+      ? `background-image: url(${bgImg}), linear-gradient(60deg,#2ae9dc 0%,#6093f8 100%); background-size: contain; background-position: center center; background-repeat: no-repeat;`
+      : `background-image: url(${bgImg});`}
 `;
 
 const PlaceDescr = styled.div`

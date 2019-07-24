@@ -87,7 +87,10 @@ export const apiInit = () => async (dispatch: DispatchAsync) => {
   }
   dispatch(loading());
   try {
-    const { placeCollection } = await getPlaceCollectionById(collectionId!);
+    const queryParams = { details: '' };
+    const { placeCollection } = await getPlaceCollectionById(collectionId!, {
+      params: queryParams,
+    });
     const galleryId = placeCollection.customAttributes
       ? placeCollection.customAttributes.galleryId
       : null;
