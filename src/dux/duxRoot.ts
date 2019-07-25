@@ -7,10 +7,7 @@ import {
 import { chatbotReducer as chatbot, IChatbotState } from './chatbot/chatbotDux';
 import { IInitState, initReducer as init } from './init/initDux';
 
-import {
-  IRecomendationsState,
-  recomendationsReducer as recomendations,
-} from './recomendations/recomendationsDux';
+import { IPlacesState, placesReducer as places } from './places/placesDux';
 
 export type DispatchAsync = ThunkDispatch<IAppState, null, any>;
 
@@ -18,12 +15,12 @@ export interface IAppState {
   init: IInitState;
   chatbot: IChatbotState;
   categories: ICategoriesState;
-  recomendations: IRecomendationsState;
+  places: IPlacesState;
 }
 
 export const rootReducer = combineReducers<IAppState>({
   init,
   chatbot,
   categories,
-  recomendations,
+  places,
 });

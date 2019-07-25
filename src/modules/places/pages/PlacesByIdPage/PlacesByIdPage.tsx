@@ -12,7 +12,8 @@ import {
   PLACE_COLLECTION_KEY,
   SAVED_PLACES_KEY,
 } from '../../../../data/constants';
-import { IPlaceCollection, IPlacePhoto } from '../../../../dux/init/initApi';
+import { IPlaceCollection } from '../../../../dux/init/initApi';
+import { IPlacePhoto } from '../../../../dux/places/placesApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import NotFoundPage from '../../../notFound';
 import ActionButton from '../../components/ActionButton';

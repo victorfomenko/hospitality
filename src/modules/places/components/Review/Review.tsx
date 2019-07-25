@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
-import { IPlaceReview } from '../../../../dux/init/initApi';
+import { IPlaceReview } from '../../../../dux/places/placesApi';
 import Rating from '../Rating';
 
 const Review: FunctionComponent<IPlaceReview> = ({
