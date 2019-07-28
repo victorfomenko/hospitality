@@ -13,7 +13,11 @@ import {
   SAVED_PLACES_KEY,
 } from '../../../../data/constants';
 import { IPlaceCollection } from '../../../../dux/init/initApi';
-import { IDetails, IPlacePhoto } from '../../../../dux/places/placesApi';
+import {
+  IDetails,
+  IPlacePhoto,
+  IPlaceReview,
+} from '../../../../dux/places/placesApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import NotFoundPage from '../../../notFound';
 import ActionButton from '../../components/ActionButton';
@@ -26,12 +30,16 @@ import Review from '../../components/Review';
 interface IPlacesByIdPageProps extends RouteComponentProps<{ id: string }> {
   collection: IPlaceCollection;
   details: IDetails;
+  reviews: IPlaceReview[];
+  getReviews: (id: string) => void;
 }
 
 const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   match,
   collection,
   details,
+  reviews,
+  getReviews,
 }) => {
   const [state, setState] = React.useState(0);
   const placeCollectionId = storage.getItem(PLACE_COLLECTION_KEY) || '';
@@ -43,6 +51,12 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   const savedPlaces = placesById[placeCollectionId] || [];
   const indexOfSavedPlace = savedPlaces.indexOf(id);
   const place = collection.places.find(item => item.id === id);
+
+  React.useEffect(() => {
+    if (!reviews) {
+      getReviews(id);
+    }
+  }, [getReviews, id, reviews]);
 
   if (!place) {
     return <NotFoundPage />;
@@ -93,43 +107,47 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
                 <Rating placeholderRating={details.rating} />
                 <RateValue>{details.rating}</RateValue>
               </Rate>
-              <Reviews>{(details.reviews || []).length} Google reviews</Reviews>
+              <Reviews>{(reviews || []).length} Google reviews</Reviews>
             </RankingContainer>
             <PlaceAdress>
               <StyledAdressIcon />
               {details.formatted_address}
             </PlaceAdress>
-            <TabsWrapper>
-              <Tabs value={state} onChange={handleTabChange}>
-                {details.reviews && <Tab label="Reviews" />}
-                {details.photos && <Tab label="Gallery" />}
-              </Tabs>
-            </TabsWrapper>
-            <SwipeableViews
-              index={state}
-              enableMouseEvents={true}
-              animateHeight={true}
-              containerStyle={containerStyle}
-              onChangeIndex={handleChangeIndex}
-            >
-              <div>
-                {(details.reviews || []).map(review => (
-                  <Review key={review.time} {...review} />
-                ))}
-              </div>
-              <ScrollWrapper>
-                {(details.photos || []).slice(1).map(item => {
-                  return (
-                    <ImgWrapper key={item.photo_reference}>
-                      <Img
-                        src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
-                        alt={place.name}
-                      />
-                    </ImgWrapper>
-                  );
-                })}
-              </ScrollWrapper>
-            </SwipeableViews>
+            {reviews && (
+              <>
+                <TabsWrapper>
+                  <Tabs value={state} onChange={handleTabChange}>
+                    <Tab label="Reviews" />
+                    {details.photos && <Tab label="Gallery" />}
+                  </Tabs>
+                </TabsWrapper>
+                <SwipeableViews
+                  index={state}
+                  enableMouseEvents={true}
+                  animateHeight={true}
+                  containerStyle={containerStyle}
+                  onChangeIndex={handleChangeIndex}
+                >
+                  <div>
+                    {reviews.map(review => (
+                      <Review key={review.time} {...review} />
+                    ))}
+                  </div>
+                  <ScrollWrapper>
+                    {(details.photos || []).slice(1).map(item => {
+                      return (
+                        <ImgWrapper key={item.photo_reference}>
+                          <Img
+                            src={`${GOOGLE_PHOTO_API}/${item.photo_reference}`}
+                            alt={place.name}
+                          />
+                        </ImgWrapper>
+                      );
+                    })}
+                  </ScrollWrapper>
+                </SwipeableViews>
+              </>
+            )}
           </>
         )}
       </Content>

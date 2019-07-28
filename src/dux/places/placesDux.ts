@@ -2,12 +2,18 @@ import { createAction, createReducer } from 'redux-act';
 import { createSelector } from 'reselect';
 import { DispatchAsync, IAppState } from '../duxRoot';
 import { placeCollectionIdSelector } from '../init/initDux';
-import { getPlaceDetailsById, IDetailsMap } from './placesApi';
+import {
+  getPlaceDetailsById,
+  getPlaceReviewsById,
+  IDetailsMap,
+  IReviewsMap,
+} from './placesApi';
 
 // Interface
 export interface IPlacesState {
   isLoading: boolean;
   details: IDetailsMap;
+  reviews: IReviewsMap;
   placeCollectionId: number | null;
 }
 
@@ -15,6 +21,7 @@ export interface IPlacesState {
 const defaultState: IPlacesState = {
   isLoading: false,
   details: {},
+  reviews: {},
   placeCollectionId: null,
 };
 
@@ -33,6 +40,12 @@ export const detailsByIdSelector = createSelector(
   (item, id) => item.details[id],
 );
 
+export const reviewsByIdSelector = createSelector(
+  duxSelector,
+  idSelector,
+  (item, id) => item.reviews[id],
+);
+
 export const detailsSelector = createSelector(
   duxSelector,
   ({ details }) => details,
@@ -40,7 +53,10 @@ export const detailsSelector = createSelector(
 
 // Sync actions
 export const loading = createAction('loading');
-export const success = createAction<IDetailsMap>('success');
+export const success = createAction<{
+  details?: IDetailsMap;
+  reviews?: IReviewsMap;
+}>('success');
 export const error = createAction<{}>('error');
 
 // Async actions
@@ -67,7 +83,24 @@ export const getDetails = (ids: string[]) => async (
       },
       {} as IDetailsMap,
     );
-    dispatch(success(details));
+    dispatch(success({ details }));
+  } catch (e) {
+    dispatch(error(e));
+  }
+};
+
+export const getReviews = (id: string) => async (
+  dispatch: DispatchAsync,
+  getState: () => IAppState,
+) => {
+  const collectionId = placeCollectionIdSelector(getState());
+  if (!collectionId) {
+    return;
+  }
+  dispatch(loading());
+  try {
+    const { reviews } = await getPlaceReviewsById(collectionId, id);
+    dispatch(success({ reviews: { [id]: reviews } }));
   } catch (e) {
     dispatch(error(e));
   }
@@ -80,12 +113,15 @@ export const placesReducer = createReducer(
       ...state,
       isLoading: true,
     }),
-    [success.toString()]: (state: IPlacesState, payload) => ({
+    [success.toString()]: (state: IPlacesState, { details, reviews }) => ({
       ...state,
-      details: {
-        ...state.details,
-        ...payload,
-      },
+      details: details
+        ? {
+            ...state.details,
+            ...details,
+          }
+        : state.details,
+      reviews: reviews ? { ...state.reviews, ...reviews } : state.reviews,
       isLoading: false,
     }),
     [error.toString()]: (state: IPlacesState, payload) => ({
