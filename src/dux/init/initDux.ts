@@ -72,33 +72,6 @@ const defaultState: IInitState = {
 // Selectors
 const duxSelector = (state: IAppState) => state.init;
 
-// Sync actions
-export const loading = createAction('loading');
-export const success = createAction<ISuccess>('success');
-export const error = createAction<{}>('error');
-export const setCollectionId = createAction<string>('setCollectionId');
-
-// Async actions
-export const apiInit = () => async (dispatch: DispatchAsync) => {
-  const collectionId = getCollectionId();
-  dispatch(setCollectionId(collectionId));
-  if (!collectionId) {
-    return;
-  }
-  dispatch(loading());
-  try {
-    const { placeCollection } = await getPlaceCollectionById(collectionId!);
-    const galleryId = placeCollection.customAttributes
-      ? placeCollection.customAttributes.galleryId
-      : null;
-
-    const gallery = galleryId ? await getGalleryById(galleryId) : null;
-    dispatch(success({ collection: placeCollection, gallery }));
-  } catch (e) {
-    dispatch(error(e));
-  }
-};
-
 export const loadingSelector = createSelector(
   duxSelector,
   ({ isLoading }) => isLoading,
@@ -128,6 +101,33 @@ export const placeCollectionIdSelector = createSelector(
   duxSelector,
   ({ placeCollectionId }) => placeCollectionId,
 );
+
+// Sync actions
+export const loading = createAction('loading');
+export const success = createAction<ISuccess>('success');
+export const error = createAction<{}>('error');
+export const setCollectionId = createAction<string>('setCollectionId');
+
+// Async actions
+export const apiInit = () => async (dispatch: DispatchAsync) => {
+  const collectionId = getCollectionId();
+  dispatch(setCollectionId(collectionId));
+  if (!collectionId) {
+    return;
+  }
+  dispatch(loading());
+  try {
+    const { placeCollection } = await getPlaceCollectionById(collectionId!);
+    const galleryId = placeCollection.customAttributes
+      ? placeCollection.customAttributes.galleryId
+      : null;
+
+    const gallery = galleryId ? await getGalleryById(galleryId) : null;
+    dispatch(success({ collection: placeCollection, gallery }));
+  } catch (e) {
+    dispatch(error(e));
+  }
+};
 
 // Reducer
 export const initReducer = createReducer(

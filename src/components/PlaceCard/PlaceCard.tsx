@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../data/constants';
-import { IPlace, IPlacePhoto } from '../../dux/init/initApi';
+import { IPlace } from '../../dux/init/initApi';
+import { IDetails, IPlacePhoto } from '../../dux/places/placesApi';
 import { ReactComponent as CommentIcon } from './img/comment.svg';
 import { ReactComponent as LocationIcon } from './img/location.svg';
 import { ReactComponent as StarIcon } from './img/star.svg';
@@ -12,47 +13,62 @@ interface IPlaceCard
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {
+  details: IDetails;
   place: IPlace;
+  isVisible?: boolean;
+  getDetails: (ids: string[]) => void;
 }
 
 interface IPlaceImg {
   bgImg: string;
+  isEmpty: boolean;
 }
 
 const PlaceCard: FunctionComponent<IPlaceCard> = ({
   place,
+  details,
+  isVisible,
+  getDetails,
 }: IPlaceCard): JSX.Element => {
+  const placePhotos = details ? details.photos || [] : [];
+  const isPhotosExists = placePhotos.length > 0;
+
+  React.useEffect(() => {
+    if (isVisible && !details) {
+      getDetails([place.id]);
+    }
+  }, [details, getDetails, isVisible, place.id]);
+
   const prepareImageUrl = (photoList: IPlacePhoto[] = []) => {
-    // if (!photoList.length) {
-    return NO_PHOTO_URL;
-    // }
-    // return `${GOOGLE_PHOTO_API}/${photoList[0].photo_reference}`;
+    if (!isPhotosExists) {
+      return NO_PHOTO_URL;
+    }
+    return `${GOOGLE_PHOTO_API}/${photoList[0].photo_reference}`;
   };
 
   return (
     <StyledLink to={`/places/${place.id}`}>
       <Card>
         <PlaceImg
-          bgImg={prepareImageUrl(place.details ? place.details.photos : [])}
+          isEmpty={!isPhotosExists}
+          bgImg={prepareImageUrl(placePhotos)}
         />
         <PlaceDescr>
           <PlaceName>{place.name}</PlaceName>
-          {place.details && (
+          {details && (
             <Info>
               <Location>
                 <StyledLocationIcon />
-                <Adress>{place.details.formatted_address}</Adress>
+                <Adress>{details.formatted_address}</Adress>
               </Location>
               <Right>
                 <Rate>
                   <StyledStarIcon />
-                  <RateCount>{place.details.rating}</RateCount>
+                  <RateCount>{details.rating}</RateCount>
                 </Rate>
                 <Reviews>
                   <StyledCommentIcon />
-                  <ReviewCount>
-                    {(place.details.reviews || []).length}
-                  </ReviewCount>
+                  <ReviewCount>{(details.reviews || []).length}</ReviewCount>
                 </Reviews>
               </Right>
             </Info>
@@ -84,7 +100,10 @@ const PlaceImg = styled.div<IPlaceImg>`
   margin-right: 20px;
   border-radius: 10px;
   background-size: cover;
-  ${({ bgImg }) => `background-image: url(${bgImg})`}
+  ${({ bgImg, isEmpty }) =>
+    isEmpty
+      ? `background-image: url(${bgImg}), linear-gradient(60deg,#2ae9dc 0%,#6093f8 100%); background-size: contain; background-position: center center; background-repeat: no-repeat;`
+      : `background-image: url(${bgImg});`}
 `;
 
 const PlaceDescr = styled.div`

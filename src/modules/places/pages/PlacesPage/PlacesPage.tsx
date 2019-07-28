@@ -86,12 +86,16 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({
           enableMouseEvents={true}
           onChangeIndex={handleChangeIndex}
         >
-          {categories.map((category: string) => (
+          {categories.map((category: string, index: number) => (
             <div key={category}>
               {places
                 .filter(item => item.type === category)
                 .map(place => (
-                  <PlaceCard key={place.id} place={place} />
+                  <PlaceCard
+                    key={place.id}
+                    place={place}
+                    isVisible={state === index}
+                  />
                 ))}
             </div>
           ))}
