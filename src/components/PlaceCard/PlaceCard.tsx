@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../data/constants';
 import { IPlace } from '../../dux/init/initApi';
 import { IDetails, IPlacePhoto } from '../../dux/places/placesApi';
-import { ReactComponent as CommentIcon } from './img/comment.svg';
 import { ReactComponent as LocationIcon } from './img/location.svg';
 import { ReactComponent as StarIcon } from './img/star.svg';
 
@@ -66,10 +65,6 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
                   <StyledStarIcon />
                   <RateCount>{details.rating}</RateCount>
                 </Rate>
-                {/* <Reviews>
-                  <StyledCommentIcon />
-                  <ReviewCount>{(details.reviews || []).length}</ReviewCount>
-                </Reviews> */}
               </Right>
             </Info>
           )}
@@ -134,16 +129,6 @@ const Adress = styled.span`
   vertical-align: middle;
 `;
 
-const Reviews = styled.div`
-  white-space: nowrap;
-  font-size: 12px;
-  margin-left: 8px;
-`;
-
-const ReviewCount = styled.span`
-  vertical-align: middle;
-`;
-
 const Rate = styled.div`
   white-space: nowrap;
   font-size: 12px;
@@ -163,14 +148,6 @@ const StyledLocationIcon = styled(LocationIcon)`
 `;
 
 const StyledStarIcon = styled(StarIcon)`
-  width: 16px;
-  min-width: 16px;
-  height: 16px;
-  margin-right: 4px;
-  vertical-align: middle;
-`;
-
-const StyledCommentIcon = styled(CommentIcon)`
   width: 16px;
   min-width: 16px;
   height: 16px;
