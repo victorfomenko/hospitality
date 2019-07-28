@@ -12,10 +12,13 @@ const mapStateToProps = (
   return {
     collection: initDux.collectionSelector(state),
     details: placesDux.detailsByIdSelector(state, { id: match.params.id }),
+    reviews: placesDux.reviewsByIdSelector(state, { id: match.params.id }),
   };
 };
 
-const mapDispatch = null;
+const mapDispatch = {
+  getReviews: placesDux.getReviews,
+};
 
 export default connect(
   mapStateToProps,

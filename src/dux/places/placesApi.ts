@@ -1,5 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import placeDetails from '../../data/providers/placeDetails';
+import placeReviews from '../../data/providers/placeReviews';
 import { IPlace } from '../init/initApi';
 
 interface IPlaceWithDetails extends IPlace {
@@ -12,8 +13,18 @@ interface IPlaceDetailsRes {
   success: boolean;
 }
 
+interface IPlaceReviewsRes {
+  message: string;
+  reviews: IPlaceReview[];
+  success: boolean;
+}
+
 export interface IDetailsMap {
   [key: string]: IDetails;
+}
+
+export interface IReviewsMap {
+  [key: string]: IPlaceReview[];
 }
 
 export interface IDetails {
@@ -27,7 +38,6 @@ export interface IDetails {
   adr_address: string;
   formatted_address: string;
   photos?: IPlacePhoto[];
-  reviews?: IPlaceReview[];
 }
 
 export interface IPlacePhoto {
@@ -53,6 +63,22 @@ export const getPlaceDetailsById = async (
   params?: AxiosRequestConfig,
 ): Promise<IPlaceDetailsRes> => {
   const { data, statusText }: AxiosResponse = await placeDetails.get(
+    id,
+    params,
+  );
+  if (statusText !== 'OK') {
+    throw new Error(statusText);
+  }
+  return data;
+};
+
+export const getPlaceReviewsById = async (
+  placeId: string,
+  id: string,
+  params?: AxiosRequestConfig,
+): Promise<IPlaceReviewsRes> => {
+  const { data, statusText }: AxiosResponse = await placeReviews.get(
+    placeId,
     id,
     params,
   );

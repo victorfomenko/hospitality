@@ -66,10 +66,10 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
                   <StyledStarIcon />
                   <RateCount>{details.rating}</RateCount>
                 </Rate>
-                <Reviews>
+                {/* <Reviews>
                   <StyledCommentIcon />
                   <ReviewCount>{(details.reviews || []).length}</ReviewCount>
-                </Reviews>
+                </Reviews> */}
               </Right>
             </Info>
           )}
