@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../data/constants';
 import { IPlace } from '../../dux/init/initApi';
-import { IPlacePhoto } from '../../dux/places/placesApi';
+import { IDetails, IPlacePhoto } from '../../dux/places/placesApi';
 import { ReactComponent as CommentIcon } from './img/comment.svg';
 import { ReactComponent as LocationIcon } from './img/location.svg';
 import { ReactComponent as StarIcon } from './img/star.svg';
@@ -13,7 +13,10 @@ interface IPlaceCard
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {
+  details: IDetails;
   place: IPlace;
+  isVisible?: boolean;
+  getDetails: (ids: string[]) => void;
 }
 
 interface IPlaceImg {
@@ -23,9 +26,18 @@ interface IPlaceImg {
 
 const PlaceCard: FunctionComponent<IPlaceCard> = ({
   place,
+  details,
+  isVisible,
+  getDetails,
 }: IPlaceCard): JSX.Element => {
-  const placePhotos = place.details ? place.details.photos || [] : [];
+  const placePhotos = details ? details.photos || [] : [];
   const isPhotosExists = placePhotos.length > 0;
+
+  React.useEffect(() => {
+    if (isVisible && !details) {
+      getDetails([place.id]);
+    }
+  }, [details, getDetails, isVisible, place.id]);
 
   const prepareImageUrl = (photoList: IPlacePhoto[] = []) => {
     if (!isPhotosExists) {
@@ -43,22 +55,20 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
         />
         <PlaceDescr>
           <PlaceName>{place.name}</PlaceName>
-          {place.details && (
+          {details && (
             <Info>
               <Location>
                 <StyledLocationIcon />
-                <Adress>{place.details.formatted_address}</Adress>
+                <Adress>{details.formatted_address}</Adress>
               </Location>
               <Right>
                 <Rate>
                   <StyledStarIcon />
-                  <RateCount>{place.details.rating}</RateCount>
+                  <RateCount>{details.rating}</RateCount>
                 </Rate>
                 <Reviews>
                   <StyledCommentIcon />
-                  <ReviewCount>
-                    {(place.details.reviews || []).length}
-                  </ReviewCount>
+                  <ReviewCount>{(details.reviews || []).length}</ReviewCount>
                 </Reviews>
               </Right>
             </Info>

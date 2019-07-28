@@ -1,9 +1,18 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import placeDetails from '../../data/providers/placeDetails';
-interface IPlaceDetailsRes {
-  details: IPlaceDetails;
+import { IPlace } from '../init/initApi';
+
+interface IPlaceWithDetails extends IPlace {
+  details: IDetails;
 }
-export interface IPlaceDetails {
+
+interface IPlaceDetailsRes {
+  message: string;
+  places: IPlaceWithDetails[];
+  success: boolean;
+}
+
+export interface IDetailsMap {
   [key: string]: IDetails;
 }
 
@@ -40,12 +49,10 @@ export interface IPlaceReview {
 }
 
 export const getPlaceDetailsById = async (
-  placeId: string,
   id: string,
   params?: AxiosRequestConfig,
 ): Promise<IPlaceDetailsRes> => {
   const { data, statusText }: AxiosResponse = await placeDetails.get(
-    placeId,
     id,
     params,
   );

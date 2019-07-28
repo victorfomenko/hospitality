@@ -13,7 +13,7 @@ import {
   SAVED_PLACES_KEY,
 } from '../../../../data/constants';
 import { IPlaceCollection } from '../../../../dux/init/initApi';
-import { IPlacePhoto } from '../../../../dux/places/placesApi';
+import { IDetails, IPlacePhoto } from '../../../../dux/places/placesApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import NotFoundPage from '../../../notFound';
 import ActionButton from '../../components/ActionButton';
@@ -25,11 +25,13 @@ import Review from '../../components/Review';
 
 interface IPlacesByIdPageProps extends RouteComponentProps<{ id: string }> {
   collection: IPlaceCollection;
+  details: IDetails;
 }
 
 const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   match,
   collection,
+  details,
 }) => {
   const [state, setState] = React.useState(0);
   const placeCollectionId = storage.getItem(PLACE_COLLECTION_KEY) || '';
@@ -45,7 +47,7 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
   if (!place) {
     return <NotFoundPage />;
   }
-  const imgUrl = prepareImageUrl(place.details && place.details.photos);
+  const imgUrl = prepareImageUrl(details && details.photos);
 
   const handleTabChange = (e: React.ChangeEvent<{}>, index: number) => {
     setState(index);
@@ -84,25 +86,23 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
         )}
 
         <PlaceName>{place.name}</PlaceName>
-        {place.details && (
+        {details && (
           <>
             <RankingContainer>
               <Rate>
-                <Rating placeholderRating={place.details.rating} />
-                <RateValue>{place.details.rating}</RateValue>
+                <Rating placeholderRating={details.rating} />
+                <RateValue>{details.rating}</RateValue>
               </Rate>
-              <Reviews>
-                {(place.details.reviews || []).length} Google reviews
-              </Reviews>
+              <Reviews>{(details.reviews || []).length} Google reviews</Reviews>
             </RankingContainer>
             <PlaceAdress>
               <StyledAdressIcon />
-              {place.details.formatted_address}
+              {details.formatted_address}
             </PlaceAdress>
             <TabsWrapper>
               <Tabs value={state} onChange={handleTabChange}>
-                {place.details.reviews && <Tab label="Reviews" />}
-                {place.details.photos && <Tab label="Gallery" />}
+                {details.reviews && <Tab label="Reviews" />}
+                {details.photos && <Tab label="Gallery" />}
               </Tabs>
             </TabsWrapper>
             <SwipeableViews
@@ -113,12 +113,12 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
               onChangeIndex={handleChangeIndex}
             >
               <div>
-                {(place.details.reviews || []).map(review => (
+                {(details.reviews || []).map(review => (
                   <Review key={review.time} {...review} />
                 ))}
               </div>
               <ScrollWrapper>
-                {(place.details.photos || []).slice(1).map(item => {
+                {(details.photos || []).slice(1).map(item => {
                   return (
                     <ImgWrapper key={item.photo_reference}>
                       <Img

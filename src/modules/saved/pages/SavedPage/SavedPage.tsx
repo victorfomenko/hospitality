@@ -28,7 +28,9 @@ const SavedPage: FunctionComponent<ISavedPageProps> = ({ collection }) => {
       <Title>Saved places</Title>
       {savedPlaces.map(placeId => {
         const place = collection.places.find(item => item.id === placeId);
-        return place && <PlaceCard key={placeId} place={place} />;
+        return (
+          place && <PlaceCard key={placeId} place={place} isVisible={true} />
+        );
       })}
     </Wrapper>
   );

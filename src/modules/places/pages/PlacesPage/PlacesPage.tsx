@@ -12,13 +12,11 @@ import {
   CHATBOT_KEY,
 } from '../../../../data/constants';
 import { IPlace, IPlaceCollection } from '../../../../dux/init/initApi';
-import { IPlaceDetails } from '../../../../dux/places/placesApi';
 import { useStateWithLocalStorage } from '../../../../utils/useStateWithLocalStorage';
 import BackLink from '../../components/BackLink';
 
 interface IPlacePageProps extends RouteComponentProps {
   collection: IPlaceCollection;
-  details: IPlaceDetails;
 }
 
 const PlacesPage: FunctionComponent<IPlacePageProps> = ({
@@ -88,12 +86,16 @@ const PlacesPage: FunctionComponent<IPlacePageProps> = ({
           enableMouseEvents={true}
           onChangeIndex={handleChangeIndex}
         >
-          {categories.map((category: string) => (
+          {categories.map((category: string, index: number) => (
             <div key={category}>
               {places
                 .filter(item => item.type === category)
                 .map(place => (
-                  <PlaceCard key={place.id} place={place} />
+                  <PlaceCard
+                    key={place.id}
+                    place={place}
+                    isVisible={state === index}
+                  />
                 ))}
             </div>
           ))}

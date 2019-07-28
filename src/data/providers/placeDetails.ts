@@ -1,10 +1,6 @@
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 
-const get = (
-  collectionId: string = '',
-  id: string = '',
-  params?: AxiosRequestConfig,
-): AxiosPromise =>
-  axios.get(`/api/placecollection/${collectionId}/${id}`, params);
+const get = (id: string = '', params?: AxiosRequestConfig): AxiosPromise =>
+  axios.get(`/api/placecollection/${id}/details`, params);
 
 export default { get };

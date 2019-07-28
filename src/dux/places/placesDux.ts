@@ -1,13 +1,13 @@
 import { createAction, createReducer } from 'redux-act';
 import { createSelector } from 'reselect';
 import { DispatchAsync, IAppState } from '../duxRoot';
-import { IInitState, placeCollectionIdSelector } from '../init/initDux';
-import { getPlaceDetailsById, IPlaceDetails } from './placesApi';
+import { placeCollectionIdSelector } from '../init/initDux';
+import { getPlaceDetailsById, IDetailsMap } from './placesApi';
 
 // Interface
 export interface IPlacesState {
   isLoading: boolean;
-  details: IPlaceDetails;
+  details: IDetailsMap;
   placeCollectionId: number | null;
 }
 
@@ -17,9 +17,6 @@ const defaultState: IPlacesState = {
   details: {},
   placeCollectionId: null,
 };
-interface ISuccess {
-  details: IPlaceDetails;
-}
 
 // Selectors
 const duxSelector = (state: IAppState) => state.places;
@@ -43,11 +40,11 @@ export const detailsSelector = createSelector(
 
 // Sync actions
 export const loading = createAction('loading');
-export const success = createAction<ISuccess>('success');
+export const success = createAction<IDetailsMap>('success');
 export const error = createAction<{}>('error');
 
 // Async actions
-export const getDetails = (id: string) => async (
+export const getDetails = (ids: string[]) => async (
   dispatch: DispatchAsync,
   getState: () => IAppState,
 ) => {
@@ -57,9 +54,20 @@ export const getDetails = (id: string) => async (
   }
   dispatch(loading());
   try {
-    const { details } = await getPlaceDetailsById(collectionId, id);
-    // console.log(details);
-    dispatch(success({ details }));
+    const { places } = await getPlaceDetailsById(collectionId, {
+      params: { places: ids },
+    });
+    const details = places.reduce(
+      (acc, item) => {
+        const placeId = item.id;
+        if (!acc[placeId]) {
+          acc[placeId] = item.details;
+        }
+        return acc;
+      },
+      {} as IDetailsMap,
+    );
+    dispatch(success(details));
   } catch (e) {
     dispatch(error(e));
   }
@@ -72,12 +80,15 @@ export const placesReducer = createReducer(
       ...state,
       isLoading: true,
     }),
-    [success.toString()]: (state: IInitState, { ...data }) => ({
+    [success.toString()]: (state: IPlacesState, payload) => ({
       ...state,
-      ...data,
+      details: {
+        ...state.details,
+        ...payload,
+      },
       isLoading: false,
     }),
-    [error.toString()]: (state: IInitState, payload) => ({
+    [error.toString()]: (state: IPlacesState, payload) => ({
       ...state,
       error: payload,
       isLoading: false,
