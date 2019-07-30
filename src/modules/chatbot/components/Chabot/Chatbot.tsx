@@ -68,7 +68,7 @@ const ChatbotPage: FunctionComponent<IChatbotProps> = ({
           setActiveCategory(null);
         }
         if (parsedData.isLast) {
-          history.push('/places');
+          history.push(`/places${window.location.search}`);
         }
       }
     }

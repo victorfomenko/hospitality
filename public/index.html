@@ -4,10 +4,22 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_MEASUREMENT_ID%"></script>
     <script>
+      const { search } = window.location;
+      if (search.indexOf('gaDisable=1') !== -1){
+        localStorage && localStorage.setItem(`ga-disable-%REACT_APP_GA_MEASUREMENT_ID%`, '1');  
+      };
+      if (search.indexOf('gaDisable=0') !== -1){
+        localStorage && localStorage.setItem(`ga-disable-%REACT_APP_GA_MEASUREMENT_ID%`, '0');
+      }
+      const isGADisable = localStorage && localStorage.getItem(`ga-disable-%REACT_APP_GA_MEASUREMENT_ID%`) === '1'
+      // disable GA if not production or gaDisable=1 in localStorage
+      if('%NODE_ENV%' !== 'production' || isGADisable){
+        const GA_DISABLE_KEY = `ga-disable-%REACT_APP_GA_MEASUREMENT_ID%`;
+        window[GA_DISABLE_KEY] = true;
+      }
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-  
       gtag('config', '%REACT_APP_GA_MEASUREMENT_ID%');
     </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
