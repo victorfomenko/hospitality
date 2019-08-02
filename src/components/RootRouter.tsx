@@ -33,7 +33,7 @@ const RootRouter = (props: IRootRouterProps) => {
           <Layout>
             <Chatbot />
             <Switch>
-              <Redirect from="/" exact={true} to="/welcome" />
+              <Redirect from="/" exact={true} to="/chatbot" />
               <Route path="/welcome" component={WelcomePage} />
               <Route path="/chatbot" component={ChatbotPage} />
               <Route path="/categories" component={CategoriesPage} />
