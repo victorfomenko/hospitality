@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { GOOGLE_PHOTO_API, NO_PHOTO_URL } from '../../data/constants';
 import { IPlace } from '../../dux/init/initApi';
 import { IDetails, IPlacePhoto } from '../../dux/places/placesApi';
+import { ReactComponent as MoreIcon } from './img/arrow.svg';
 import { ReactComponent as LocationIcon } from './img/location.svg';
 import { ReactComponent as StarIcon } from './img/star.svg';
 
@@ -65,6 +66,9 @@ const PlaceCard: FunctionComponent<IPlaceCard> = ({
                   <StyledStarIcon />
                   <RateCount>{details.rating}</RateCount>
                 </Rate>
+                <MoreButton>
+                  <MoreIcon />
+                </MoreButton>
               </Right>
             </Info>
           )}
@@ -106,7 +110,7 @@ const PlaceDescr = styled.div`
 `;
 
 const PlaceName = styled.div`
-  margin-bottom: 23px;
+  margin-bottom: 10px;
   color: #444;
 `;
 
@@ -123,6 +127,9 @@ const Location = styled.div`
 
 const Right = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
 const Adress = styled.span`
@@ -153,6 +160,27 @@ const StyledStarIcon = styled(StarIcon)`
   height: 16px;
   margin-right: 4px;
   vertical-align: middle;
+`;
+
+const MoreButton = styled.div`
+  cursor: pointer;
+  height: 36px;
+  width: 36px;
+  background-color: #4ebbff;
+  border: 2px solid white;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to right, #15b0e9, #99d8bc);
+  justify-content: center;
+  margin-top: 5px;
+  svg {
+    width: 25px;
+    height: 25px;
+    fill: white;
+    transform: rotate(180deg);
+  }
 `;
 
 export default PlaceCard;

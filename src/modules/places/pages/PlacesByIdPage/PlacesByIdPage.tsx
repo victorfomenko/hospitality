@@ -94,7 +94,11 @@ const PlacesByIdPage: FunctionComponent<IPlacesByIdPageProps> = ({
       <Content>
         <BackLink />
         {indexOfSavedPlace === -1 ? (
-          <ActionButton type="save" onClick={handleSavePlace} />
+          <ActionButton
+            type="save"
+            text="Add to wishlist"
+            onClick={handleSavePlace}
+          />
         ) : (
           <ActionButton type="remove" onClick={handleSavePlace} />
         )}

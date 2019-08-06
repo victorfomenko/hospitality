@@ -8,19 +8,23 @@ interface IActionButtonProps
     HTMLDivElement
   > {
   type: 'save' | 'remove';
+  text?: string;
 }
 
 interface IButtonProps {
   type: 'save' | 'remove';
+  text: string | null;
 }
 
 const ActionButton: FunctionComponent<IActionButtonProps> = ({
   type = 'save',
+  text = null,
   ...props
 }): JSX.Element => {
   return (
-    <StyledActionButton type={type} {...props}>
+    <StyledActionButton type={type} text={text} {...props}>
       <CrossIcon />
+      {text && <StyledActionButtonText>{text}</StyledActionButtonText>}
     </StyledActionButton>
   );
 };
@@ -44,6 +48,13 @@ const StyledActionButton = styled.div<IButtonProps>`
   ${({ type }) =>
     type === 'remove' &&
     `background: linear-gradient(to right, #c50349, #f1216c); transform: rotate(45deg);`}
+  ${({ text }) =>
+    text !== null &&
+    `
+      width: auto;
+      border-radius: 25px;
+      padding: 0 7px;
+    `}
 
   justify-content: center;
   svg {
@@ -51,6 +62,11 @@ const StyledActionButton = styled.div<IButtonProps>`
     height: 20px;
     fill: white;
   }
+`;
+
+const StyledActionButtonText = styled.span`
+  margin-left: 5px;
+  font-size: 14px;
 `;
 
 export default ActionButton;
