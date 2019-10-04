@@ -112,17 +112,31 @@ const PlaceDescr = styled.div`
 const PlaceName = styled.div`
   margin-bottom: 10px;
   color: #444;
+
+  @media (max-width: 379px) {
+    font-size: 12px;
+    line-height: 14px;
+  }
 `;
 
 const Info = styled.div`
   display: flex;
   justify-content: space-between;
   color: #5f5e5e;
+
+  @media (max-width: 379px) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 `;
 
 const Location = styled.div`
   display: flex;
   font-size: 12px;
+
+  @media (max-width: 379px) {
+    font-size: 10px;
+  }
 `;
 
 const Right = styled.div`
@@ -130,6 +144,11 @@ const Right = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+
+  @media (max-width: 379px) {
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 const Adress = styled.span`
@@ -140,6 +159,10 @@ const Rate = styled.div`
   white-space: nowrap;
   font-size: 12px;
   margin-left: 8px;
+
+  @media (max-width: 379px) {
+    margin-left: 0;
+  }
 `;
 
 const RateCount = styled.span`
